@@ -1,0 +1,34 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 13/09/2019, 04:18:53 PM
+    Author     : IVAN
+*/
+
+#ach_root{
+    
+}
+.label{
+    -fx-font: bold 35px "Courier";
+    -fx-alignment: CENTER;
+    -fx-text-fill: white;
+}
+
+.jfx-button{
+    -fx-background-color: royalblue;
+    -fx-text-fill: white;
+    -fx-font: bold 15px "Courier";
+    -jfx-button-type: FLAT;
+}
+
+.jfx-text-field{
+    -jfx-focus-color: royalblue;
+    -jfx-unfocus-color: white;
+    -fx-prompt-text-fill: white;
+    -fx-font: bold 15px "Courier";
+    -jfx-label-float: true;
+    -fx-text-fill: white;
+}

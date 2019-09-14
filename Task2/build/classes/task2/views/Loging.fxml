@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@css/css.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="task2.controller.LogingController">
+   <children>
+      <ImageView fx:id="imv_fondo" fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" smooth="false" />
+      <Label layoutX="22.0" layoutY="14.0" prefHeight="66.0" prefWidth="556.0" text="INICIO DE SECIÓN" />
+      <ImageView fx:id="imv_usu" fitHeight="66.0" fitWidth="65.0" layoutX="22.0" layoutY="134.0" pickOnBounds="true" smooth="false" />
+      <ImageView fx:id="imv_pass" fitHeight="66.0" fitWidth="65.0" layoutX="22.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true" />
+      <JFXButton fx:id="btn_Registrarse" layoutX="246.0" layoutY="331.0" onAction="#accionRegistrarse" prefHeight="42.0" prefWidth="164.0" text="REGISTRARSE" />
+      <JFXButton fx:id="btn_Acceder" layoutX="422.0" layoutY="331.0" onAction="#accion_Acceder" prefHeight="42.0" prefWidth="164.0" text="ACCEDER" />
+      <JFXTextField layoutX="111.0" layoutY="158.0" prefHeight="42.0" prefWidth="469.0" promptText="USER NAME / NOMBRE DE USUARIO" />
+      <JFXTextField layoutX="111.0" layoutY="240.0" prefHeight="42.0" prefWidth="469.0" promptText="PASSWORD / CONTRASEÑA" />
+   </children>
+</AnchorPane>
