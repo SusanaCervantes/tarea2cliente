@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import task2.util.FlowController;
 
 /**
  *
@@ -57,6 +58,9 @@ public class LogingController extends Controller implements Initializable {
 
     @FXML
     private void accion_Acceder(ActionEvent event) {
+        getStage().close();
+        FlowController.getInstance().goMain();
+        FlowController.getInstance().goView("Menu");
     }
     
 }

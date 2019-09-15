@@ -55,6 +55,13 @@ public class FlowController {
     public void InitializeFlow(Stage stage) {
         getInstance();
         this.mainStage = stage;
+        this.mainStage.setMaximized(false);
+        this.mainStage.setResizable(true);
+        this.mainStage.setMaxWidth(1050);
+        this.mainStage.setMinWidth(800);
+        this.mainStage.setMaxHeight(700);
+        this.mainStage.setMinHeight(580);
+        this.mainStage.setTitle("");
     }
 
     private FXMLLoader getLoader(String name) {
@@ -94,21 +101,14 @@ public class FlowController {
 
     public void goMain() {
         try {
-            AppContext.getInstance().set("mainStage", this.mainStage);
-            FXMLLoader loader = getLoader("");
-            Controller controller = loader.getController();
-            this.mainStage.setScene(new Scene(loader.getRoot()));
-            controller.initialize();
-            controller.setStage(mainStage);
-            this.mainStage.setMaximized(false);
-            this.mainStage.setResizable(true);
-            this.mainStage.setMaxWidth(1050);
-            this.mainStage.setMinWidth(800);
-            this.mainStage.setMaxHeight(700);
-            this.mainStage.setMinHeight(580);
-            //this.mainStage.getIcons().add(new Image(""));
-            this.mainStage.setTitle("");
+            this.mainStage.setScene(new Scene(FXMLLoader.load(Task2.class.getResource("views/Main.fxml"), null)));
             this.mainStage.show();
+//            AppContext.getInstance().set("mainStage", this.mainStage);
+//            FXMLLoader loader = getLoader("");
+//            Controller controller = loader.getController();
+//            this.mainStage.setScene(new Scene(loader.getRoot()));
+//            controller.initialize();
+//            controller.setStage(mainStage);
             
         } catch (Exception ex) {
             java.util.logging.Logger.getLogger(FlowController.class.getName()).log(Level.SEVERE, "Error inicializando la vista base.", ex);
