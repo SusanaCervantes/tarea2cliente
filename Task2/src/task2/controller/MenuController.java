@@ -30,7 +30,6 @@ public class MenuController extends Controller implements Initializable {
     @FXML
     private void evtBtnAdministradores(ActionEvent event) {
         FlowController.getInstance().goView("MantAdministradores");
-        
     }
 
     @FXML
