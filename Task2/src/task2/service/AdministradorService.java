@@ -8,6 +8,7 @@ package task2.service;
 import controller.AdministradorController;
 import controller.AdministradorController_Service;
 import controller.AdministradorDto;
+import java.util.List;
 
 /**
  *
@@ -19,5 +20,9 @@ public class AdministradorService {
     
     public String guardarAdministrador(AdministradorDto adm){
         return port.guardarAdministrador(adm);
+    }
+    
+    public List<AdministradorDto> getAdministradores(String nombre, String apellido){
+        return port.getAdministradores(nombre, apellido);
     }
 }

@@ -7,19 +7,31 @@ package task2.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import com.sun.deploy.uitoolkit.impl.fx.ui.FXAboutDialog;
 import controller.AdministradorDto;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import task2.service.AdministradorService;
 import task2.util.FlowController;
+import task2.util.Mensaje;
 
 /**
  * FXML Controller class
@@ -47,13 +59,13 @@ public class MantAdministradoresController extends Controller implements Initial
     @FXML
     private JFXButton btnLimpiar;
     @FXML
-    private TableView<?> tblAdministradores;
+    private TableView<AdministradorDto> tblAdministradores;
     @FXML
-    private TableColumn<?, ?> tcCedula;
+    private TableColumn<AdministradorDto, String> tcCedula;
     @FXML
-    private TableColumn<?, ?> tcNombre;
+    private TableColumn<AdministradorDto, String> tcNombre;
     @FXML
-    private TableColumn<?, ?> tcApellidos;
+    private TableColumn<AdministradorDto, String> tcApellidos;
     @FXML
     private JFXTextField tfBuscarNombre;
     @FXML
@@ -64,6 +76,9 @@ public class MantAdministradoresController extends Controller implements Initial
     private JFXButton btnAtras;
     
     AdministradorService admS;
+    ObservableList<AdministradorDto> admin;
+    List<Node> requeridos = new ArrayList<>();
+    AdministradorDto adm;
 
     /**
      * Initializes the controller class.
@@ -72,41 +87,141 @@ public class MantAdministradoresController extends Controller implements Initial
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         admS = new AdministradorService();
-    }    
+        
+        tcCedula.setCellValueFactory(x -> new SimpleStringProperty(x.getValue().getCedula()));
+        tcNombre.setCellValueFactory(x -> new SimpleStringProperty(x.getValue().getNombre()));
+        tcApellidos.setCellValueFactory(x-> new SimpleStringProperty(x.getValue().getApellidos()));
+        
+        admin = FXCollections.observableArrayList();
+        adm = new AdministradorDto();
+        
+        nuevo();
+        indicarRequeridos();
+    }
 
+    public void indicarRequeridos() {
+        requeridos.clear();
+        requeridos.addAll(Arrays.asList(tfApellidos, tfCedula, tfCorreo, tfNombre, tfUsuario, pfContrasena));
+    }
+    
+    public void nuevo(){
+        unBind();
+        adm = new AdministradorDto();
+        bind();
+    }
+    
     @Override
     public void initialize() {
-        
+        limpiar();
     }
 
     @FXML
     private void evtBtnGuardar(ActionEvent event) {
-        AdministradorDto adm = new AdministradorDto();
-        adm.setNombre("Susana");
-        adm.setApellidos("Cervantes");
-        adm.setCedula("117050374");
-        adm.setCorreo("susi0326@gmail.com");
-        adm.setUsuario("su");
-        adm.setContrasena("su");
-        adm.setEstado("A");
-        adm.setVersion(new Long(1));
-        String respuesta = admS.guardarAdministrador(adm);
+        String invalidos = "";
+        invalidos = validarRequeridos();
+        if (invalidos.isEmpty()){
+            bind();
+            System.out.println(adm.getUsuario());
+            String respuesta = admS.guardarAdministrador(adm);
+            new Mensaje().show(Alert.AlertType.INFORMATION, "", respuesta);
+        }else{
+            new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar administrador", getStage(), invalidos);
+        }
     }
 
     @FXML
     private void evtBtnLimpiar(ActionEvent event) {
+        limpiar();
     }
 
     @FXML
     private void evtTblAdministradores(MouseEvent event) {
+        if(tblAdministradores.getSelectionModel().getSelectedItem() != null){
+            adm = tblAdministradores.getSelectionModel().getSelectedItem();
+            bind();
+        }
     }
 
     @FXML
     private void evtBtnBuscar(ActionEvent event) {
+        String nom = "%";
+        String ap = "%"; 
+        if(!tfBuscarNombre.getText().isEmpty()){
+            nom = tfBuscarNombre.getText();
+        }
+        if(!tfBuscarApellidos.getText().isEmpty()){
+            ap = tfBuscarApellidos.getText();
+        }
+        admin = (FXCollections.observableArrayList((List<AdministradorDto>)admS.getAdministradores(nom, ap)));
+        if(!admin.isEmpty())
+            tblAdministradores.setItems(admin);
+        else 
+            new Mensaje().show(Alert.AlertType.INFORMATION, "", "No hay coincidencias de la busqueda");
     }
     
     @FXML
     private void evtBtnAtras(ActionEvent event) {
         FlowController.getInstance().goView("Menu");
+    }
+    
+    public void limpiar(){
+        tfApellidos.clear();
+        tfBuscarApellidos.clear();
+        tfBuscarNombre.clear();
+        tfCedula.clear();
+        tfCorreo.clear();
+        tfNombre.clear();
+        tfUsuario.clear();
+        cbEstado.setSelected(false);
+        pfContrasena.clear();
+        admin.clear();
+        tblAdministradores.getItems().clear();
+    }
+    
+    private void bind() {
+        tfApellidos.textProperty().bindBidirectional(new SimpleStringProperty(adm.getApellidos()));
+        tfCedula.textProperty().bindBidirectional(new SimpleStringProperty(adm.getCedula()));
+        tfCorreo.textProperty().bindBidirectional(new SimpleStringProperty(adm.getCorreo()));
+        tfNombre.textProperty().bindBidirectional(new SimpleStringProperty(adm.getNombre()));
+        tfUsuario.textProperty().bindBidirectional(new SimpleStringProperty(adm.getUsuario()));
+        pfContrasena.textProperty().bindBidirectional(new SimpleStringProperty(adm.getContrasena()));
+        //cbEstado.setSelected(false);
+    }
+    
+    private void unBind() {
+        tfApellidos.textProperty().unbindBidirectional(new SimpleStringProperty(adm.getApellidos()));
+        tfCedula.textProperty().unbindBidirectional(new SimpleStringProperty(adm.getCedula()));
+        tfCorreo.textProperty().unbindBidirectional(new SimpleStringProperty(adm.getCorreo()));
+        tfNombre.textProperty().unbindBidirectional(new SimpleStringProperty(adm.getNombre()));
+        tfUsuario.textProperty().unbindBidirectional(new SimpleStringProperty(adm.getUsuario()));
+        pfContrasena.textProperty().unbindBidirectional(new SimpleStringProperty(adm.getContrasena()));
+        //cbEstado.setSelected(false);
+    }
+    
+    public String validarRequeridos() {
+        Boolean validos = true;
+        String invalidos = "";
+        for (Node node : requeridos) {
+            if (node instanceof JFXTextField && !((JFXTextField) node).validate()) {
+                if (validos) {
+                    invalidos += ((JFXTextField) node).getPromptText();
+                } else {
+                    invalidos += "," + ((JFXTextField) node).getPromptText();
+                }
+                validos = false;
+            } else if (node instanceof JFXPasswordField && !((JFXPasswordField) node).validate()) {
+                if (validos) {
+                    invalidos += ((JFXPasswordField) node).getPromptText();
+                } else {
+                    invalidos += "," + ((JFXPasswordField) node).getPromptText();
+                }
+                validos = false;
+            }
+        }
+        if (validos) {
+            return "";
+        } else {
+            return "Campos requeridos o con problemas de formato [" + invalidos + "].";
+        }
     }
 }
