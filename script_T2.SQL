@@ -1,4 +1,4 @@
-﻿/*
+/*
 Created: 13/9/2019
 Modified: 13/9/2019
 Model: administracionProyectos
@@ -54,7 +54,7 @@ CREATE TABLE UNA.Adm_Proyecto(
   pro_fr_inicio Varchar2(30 ),
   pro_fr_final Varchar2(30 ),
   pro_estado Varchar2(1 ) NOT NULL,
-  pro_version Number,
+  pro_version Number DEFAULT 1,
   pro_nombre Varchar2(30 ) NOT NULL,
   CONSTRAINT pro_ck_estado CHECK (pro_estado in ('P', 'C', 'S', 'F'))
 )
@@ -76,7 +76,7 @@ CREATE TABLE UNA.Adm_Administrador(
   adm_cedula Varchar2(30 ) NOT NULL,
   adm_correo Varchar2(50 ),
   adm_estado Varchar2(1 ) NOT NULL,
-  adm_version Number,
+  adm_version Number DEFAULT 1,
   CONSTRAINT adm_ck_estado CHECK (adm_estado in ('A', 'I'))
 )
 ;
@@ -99,7 +99,7 @@ CREATE TABLE UNA.Adm_Actividad(
   act_descripcion Varchar2(100 ),
   act_estado Varchar2(1 ) NOT NULL,
   act_nombre Varchar2(30 ) NOT NULL,
-  act_version Number,
+  act_version Number DEFAULT 1,
   pro_id Number,
   CONSTRAINT act_ck_estado CHECK (act_estado in ('1', '2', '3', '4'))
 )
@@ -122,7 +122,7 @@ CREATE TABLE UNA.Adm_Seguimiento(
   seg_detalle Varchar2(100 ) NOT NULL,
   seg_fecha Varchar2(30 ) NOT NULL,
   seg_porcentaje Number NOT NULL,
-  seg_version Number,
+  seg_version Number DEFAULT 1,
   pro_id Number
 )
 ;
@@ -141,61 +141,61 @@ ALTER TABLE UNA.Adm_Seguimiento ADD CONSTRAINT PK_Adm_Seguimiento PRIMARY KEY (s
 CREATE OR REPLACE TRIGGER UNA.ts_Adm_Proyecto_Adm_Proyecto_0 BEFORE INSERT
 ON UNA.Adm_Proyecto FOR EACH ROW
 BEGIN
-  :new.pro_id := UNA.Adm_Proyecto_seq01.nextval;
+	if :new.pro_id is null or :new.pro_id == 0 then
+		:new.pro_id := UNA.Adm_Proyecto_seq01.nextval;
+	end if;
 END;
-;
 /
 CREATE OR REPLACE TRIGGER UNA.tsu_Adm_Proyecto_Adm_Proyect_0 AFTER UPDATE OF pro_id
 ON UNA.Adm_Proyecto FOR EACH ROW
 BEGIN
   RAISE_APPLICATION_ERROR(-20010,'Cannot update column pro_id in table UNA.Adm_Proyecto as it uses sequence.');
 END;
-;
 /
 -- Trigger for sequence UNA.Adm_Administrador_seq01 for column adm_id in table UNA.Adm_Administrador ---------
 CREATE OR REPLACE TRIGGER UNA.ts_Adm_Administrador_Adm_Adm_0 BEFORE INSERT
 ON UNA.Adm_Administrador FOR EACH ROW
 BEGIN
-  :new.adm_id := UNA.Adm_Administrador_seq01.nextval;
+	if :new.adm_id is null then or :new.adm_id == 0 then
+		:new.adm_id := UNA.Adm_Administrador_seq01.nextval;
+	end if;		
 END;
-;
 /
 CREATE OR REPLACE TRIGGER UNA.tsu_Adm_Administrador_Adm_Ad_0 AFTER UPDATE OF adm_id
 ON UNA.Adm_Administrador FOR EACH ROW
 BEGIN
   RAISE_APPLICATION_ERROR(-20010,'Cannot update column adm_id in table UNA.Adm_Administrador as it uses sequence.');
 END;
-;
 /
 -- Trigger for sequence UNA.Adm_Actividad_seq01 for column act_id in table UNA.Adm_Actividad ---------
 CREATE OR REPLACE TRIGGER UNA.ts_Adm_Actividad_Adm_Activid_0 BEFORE INSERT
 ON UNA.Adm_Actividad FOR EACH ROW
 BEGIN
-  :new.act_id := UNA.Adm_Actividad_seq01.nextval;
+	if :new.act_id is null or :new.act_id == 0 then
+		:new.act_id := UNA.Adm_Actividad_seq01.nextval;
+	end if;
 END;
-;
 /
 CREATE OR REPLACE TRIGGER UNA.tsu_Adm_Actividad_Adm_Activi_0 AFTER UPDATE OF act_id
 ON UNA.Adm_Actividad FOR EACH ROW
 BEGIN
   RAISE_APPLICATION_ERROR(-20010,'Cannot update column act_id in table UNA.Adm_Actividad as it uses sequence.');
 END;
-;
 /
 -- Trigger for sequence UNA.Adm_Seguimiento_seq01 for column seg_id in table UNA.Adm_Seguimiento ---------
 CREATE OR REPLACE TRIGGER UNA.ts_Adm_Seguimiento_Adm_Segui_0 BEFORE INSERT
 ON UNA.Adm_Seguimiento FOR EACH ROW
 BEGIN
-  :new.seg_id := UNA.Adm_Seguimiento_seq01.nextval;
+	if :new.seg_id is null or :new.seg_id == 0 then
+		:new.seg_id := UNA.Adm_Seguimiento_seq01.nextval;
+	end if;
 END;
-;
 /
 CREATE OR REPLACE TRIGGER UNA.tsu_Adm_Seguimiento_Adm_Segu_0 AFTER UPDATE OF seg_id
 ON UNA.Adm_Seguimiento FOR EACH ROW
 BEGIN
   RAISE_APPLICATION_ERROR(-20010,'Cannot update column seg_id in table UNA.Adm_Seguimiento as it uses sequence.');
 END;
-;
 /
 
 
