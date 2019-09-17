@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import java.net.URL?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<HBox alignment="CENTER" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="task2.controller.MenuController">
+   <children>
+      <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass">
+          <stylesheets>
+              <URL value="@/task2/views/css/css.css" />
+          </stylesheets>
+         <children>
+            <VBox layoutX="131.0" layoutY="37.0" prefHeight="341.0" prefWidth="339.0">
+               <children>
+                  <HBox prefHeight="264.0" prefWidth="364.0" spacing="60.0">
+                     <children>
+                        <JFXButton onAction="#evtBtnAdministradores" prefHeight="140.0" prefWidth="140.0" text="Administradores" />
+                        <JFXButton onAction="#evtBtnProyectos" prefHeight="140.0" prefWidth="140.0" text="Proyectos" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="267.0" prefWidth="384.0" spacing="60.0">
+                     <children>
+                        <JFXButton onAction="#evtBtnActividad" prefHeight="140.0" prefWidth="140.0" text="Actvidad" />
+                        <JFXButton onAction="#evtBtnSeguimiento" prefHeight="140.0" prefWidth="140.0" text="Seguimiento" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </children>
+</HBox>

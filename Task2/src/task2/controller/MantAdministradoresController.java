@@ -90,9 +90,9 @@ public class MantAdministradoresController extends Controller implements Initial
         // TODO
         admS = new AdministradorService();
         
-        tcCedula.setCellValueFactory(x -> x.getValue().getCedula());
+  /*      tcCedula.setCellValueFactory(x -> x.getValue().getCedula());
         tcNombre.setCellValueFactory(x -> x.getValue().getNombre());
-        tcApellidos.setCellValueFactory(x-> x.getValue().getApellidos());
+        tcApellidos.setCellValueFactory(x-> x.getValue().getApellidos());*/
         
         admin = FXCollections.observableArrayList();
         adm = new AdministradorDto();
@@ -181,12 +181,12 @@ public class MantAdministradoresController extends Controller implements Initial
     }
     
     private void bind() {
-        tfApellidos.textProperty().bindBidirectional(adm.getApellidos());
+      /*  tfApellidos.textProperty().bindBidirectional(adm.getApellidos());
         tfCedula.textProperty().bindBidirectional(adm.getCedula());
         tfCorreo.textProperty().bindBidirectional(adm.getCorreo());
         tfNombre.textProperty().bindBidirectional(adm.getNombre());
         tfUsuario.textProperty().bindBidirectional(adm.getUsuario());
-        pfContrasena.textProperty().bindBidirectional(adm.getContrasena());
+        pfContrasena.textProperty().bindBidirectional(adm.getContrasena());*/
         //cbEstado.setSelected(false);
     }
     

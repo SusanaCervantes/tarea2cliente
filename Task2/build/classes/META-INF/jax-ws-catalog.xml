@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://localhost:8000/AdministradorController/AdministradorController?wsdl" uri="wsdl/localhost_8000/AdministradorController/AdministradorController.wsdl"/>
+    <system systemId="http://localhost:8000/AdministradorController/AdministradorController?xsd=1" uri="wsdl/localhost_8000/AdministradorController/AdministradorController.xsd_1.xsd"/>
+    <system systemId="http://localhost:8000/AdmProWs/AdministradorController?wsdl" uri="wsdl/localhost_8000/AdmProWs/AdministradorController.wsdl"/>
+    <system systemId="http://localhost:8000/AdmProWs/AdministradorController?xsd=1" uri="wsdl/localhost_8000/AdmProWs/AdministradorController.xsd_1.xsd"/>
+</catalog>
