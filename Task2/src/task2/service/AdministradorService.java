@@ -25,4 +25,8 @@ public class AdministradorService {
     public List<AdministradorDto> getAdministradores(String nombre, String apellido){
         return port.getAdministradores(nombre, apellido);
     }
+    
+    public String eliminarAdministrador(Long id){
+        return port.eliminarAdministrador(id);
+    }
 }

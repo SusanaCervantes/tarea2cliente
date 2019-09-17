@@ -79,6 +79,8 @@ public class MantAdministradoresController extends Controller implements Initial
     ObservableList<AdministradorDto> admin;
     List<Node> requeridos = new ArrayList<>();
     AdministradorDto adm;
+    @FXML
+    private JFXButton btnEliminar;
 
     /**
      * Initializes the controller class.
@@ -88,9 +90,9 @@ public class MantAdministradoresController extends Controller implements Initial
         // TODO
         admS = new AdministradorService();
         
-        tcCedula.setCellValueFactory(x -> new SimpleStringProperty(x.getValue().getCedula()));
-        tcNombre.setCellValueFactory(x -> new SimpleStringProperty(x.getValue().getNombre()));
-        tcApellidos.setCellValueFactory(x-> new SimpleStringProperty(x.getValue().getApellidos()));
+        tcCedula.setCellValueFactory(x -> x.getValue().getCedula());
+        tcNombre.setCellValueFactory(x -> x.getValue().getNombre());
+        tcApellidos.setCellValueFactory(x-> x.getValue().getApellidos());
         
         admin = FXCollections.observableArrayList();
         adm = new AdministradorDto();
@@ -179,22 +181,22 @@ public class MantAdministradoresController extends Controller implements Initial
     }
     
     private void bind() {
-        tfApellidos.textProperty().bindBidirectional(new SimpleStringProperty(adm.getApellidos()));
-        tfCedula.textProperty().bindBidirectional(new SimpleStringProperty(adm.getCedula()));
-        tfCorreo.textProperty().bindBidirectional(new SimpleStringProperty(adm.getCorreo()));
-        tfNombre.textProperty().bindBidirectional(new SimpleStringProperty(adm.getNombre()));
-        tfUsuario.textProperty().bindBidirectional(new SimpleStringProperty(adm.getUsuario()));
-        pfContrasena.textProperty().bindBidirectional(new SimpleStringProperty(adm.getContrasena()));
+        tfApellidos.textProperty().bindBidirectional(adm.getApellidos());
+        tfCedula.textProperty().bindBidirectional(adm.getCedula());
+        tfCorreo.textProperty().bindBidirectional(adm.getCorreo());
+        tfNombre.textProperty().bindBidirectional(adm.getNombre());
+        tfUsuario.textProperty().bindBidirectional(adm.getUsuario());
+        pfContrasena.textProperty().bindBidirectional(adm.getContrasena());
         //cbEstado.setSelected(false);
     }
     
     private void unBind() {
-        tfApellidos.textProperty().unbindBidirectional(new SimpleStringProperty(adm.getApellidos()));
-        tfCedula.textProperty().unbindBidirectional(new SimpleStringProperty(adm.getCedula()));
-        tfCorreo.textProperty().unbindBidirectional(new SimpleStringProperty(adm.getCorreo()));
-        tfNombre.textProperty().unbindBidirectional(new SimpleStringProperty(adm.getNombre()));
-        tfUsuario.textProperty().unbindBidirectional(new SimpleStringProperty(adm.getUsuario()));
-        pfContrasena.textProperty().unbindBidirectional(new SimpleStringProperty(adm.getContrasena()));
+        tfApellidos.textProperty().unbindBidirectional(adm.getApellidos());
+        tfCedula.textProperty().unbindBidirectional(adm.getCedula());
+        tfCorreo.textProperty().unbindBidirectional(adm.getCorreo());
+        tfNombre.textProperty().unbindBidirectional(adm.getNombre());
+        tfUsuario.textProperty().unbindBidirectional(adm.getUsuario());
+        pfContrasena.textProperty().unbindBidirectional(adm.getContrasena());
         //cbEstado.setSelected(false);
     }
     
@@ -223,5 +225,15 @@ public class MantAdministradoresController extends Controller implements Initial
         } else {
             return "Campos requeridos o con problemas de formato [" + invalidos + "].";
         }
+    }
+
+    @FXML
+    private void evtBtnEliminar(ActionEvent event) {
+        if(adm.getId() != null){
+            new Mensaje().show(Alert.AlertType.INFORMATION, "", admS.eliminarAdministrador(adm.getId()));
+        }else{
+            new Mensaje().show(Alert.AlertType.INFORMATION, "", "Primero debe seleccionar un administrador");
+        }
+        
     }
 }

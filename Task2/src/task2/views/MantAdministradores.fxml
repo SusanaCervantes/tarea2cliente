@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
 <HBox alignment="CENTER" prefHeight="578.0" prefWidth="777.0" style="-fx-background-color: #90CAF9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="task2.controller.MantAdministradoresController">
    <children>
       <AnchorPane id="AnchorPane" prefHeight="564.0" prefWidth="777.0" style="-fx-background-color: #90CAF9;" styleClass="mainFxmlClass">
@@ -40,6 +39,7 @@
                   <HBox alignment="CENTER" spacing="100.0">
                      <children>
                         <JFXButton fx:id="btnGuardar" onAction="#evtBtnGuardar" text="Guardar" />
+                        <JFXButton fx:id="btnEliminar" onAction="#evtBtnEliminar" text="Eliminar" />
                         <JFXButton fx:id="btnLimpiar" onAction="#evtBtnLimpiar" text="Limpiar" />
                      </children>
                   </HBox>
