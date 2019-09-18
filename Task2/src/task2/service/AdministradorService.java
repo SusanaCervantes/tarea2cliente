@@ -8,7 +8,9 @@ package task2.service;
 import controller.AdministradorController;
 import controller.AdministradorController_Service;
 import controller.AdministradorDto;
+import java.util.ArrayList;
 import java.util.List;
+import task2.model.Administradordto;
 
 /**
  *
@@ -18,12 +20,22 @@ public class AdministradorService {
     AdministradorController_Service amdC = new AdministradorController_Service();
     AdministradorController port = amdC.getAdministradorControllerPort();
     
-    public String guardarAdministrador(AdministradorDto adm){
-        return port.guardarAdministrador(adm);
+    public Administradordto guardarAdministrador(Administradordto adm){
+        AdministradorDto adm1 = new AdministradorDto();
+        adm1 = adm.AdministradordtoToDto(adm1);
+        
+        adm = new Administradordto(port.guardarAdministrador(adm1));
+        return adm;
     }
     
-    public List<AdministradorDto> getAdministradores(String nombre, String apellido){
-        return port.getAdministradores(nombre, apellido);
+    public List<Administradordto> getAdministradores(String nombre, String apellido){
+        List<AdministradorDto> adms = port.getAdministradores(nombre, apellido);
+        List<Administradordto> adms2 = new ArrayList<>();
+        
+        for(AdministradorDto a: adms){
+            adms2.add(new Administradordto(a));
+        }
+        return adms2;
     }
     
     public String eliminarAdministrador(Long id){
