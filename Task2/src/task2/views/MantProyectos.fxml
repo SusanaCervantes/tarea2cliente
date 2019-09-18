@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<BorderPane fx:id="bp_rootP" prefHeight="550.0" prefWidth="750.0" stylesheets="@css/css2.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="task2.controller.MantProyectosController">
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="45.0" prefWidth="750.0" BorderPane.alignment="CENTER">
+         <children>
+            <JFXButton fx:id="btn_Limpiar" onAction="#accionLimpiar" prefHeight="35.0" prefWidth="200.0" text="LIMPIAR">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btn_Eliminar" onAction="#accionEliminar" prefHeight="35.0" prefWidth="200.0" text="ELIMINAR">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btn_GuardarP" onAction="#accionGuardarProyecto" prefHeight="35.0" prefWidth="200.0" text="GUARDAR">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btn_BuscarP" onAction="#accionBuscarP" prefHeight="35.0" prefWidth="200.0" text="BUSCAR">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+            </JFXButton>
+         </children>
+      </HBox>
+   </bottom>
+   <top>
+      <HBox alignment="CENTER" prefHeight="45.0" prefWidth="759.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="lbl_titulo" prefHeight="76.0" prefWidth="635.0" text="CONTROL DE PROYECTOS">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+            </Label>
+            <JFXButton fx:id="btn_Atras" onAction="#accionAtras" prefHeight="33.0" prefWidth="112.0" text="ATRAS">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+            </JFXButton>
+         </children>
+      </HBox>
+   </top>
+   <left>
+      <VBox alignment="CENTER" prefHeight="459.0" prefWidth="353.0" BorderPane.alignment="CENTER">
+         <children>
+            <JFXTextField fx:id="tf_nombreProyecto" prefHeight="35.0" promptText="Nombre del Proyecto">
+               <VBox.margin>
+                  <Insets bottom="15.0" left="5.0" right="5.0" top="15.0" />
+               </VBox.margin>
+            </JFXTextField>
+            <JFXDatePicker fx:id="dp_fechainicio" prefHeight="35.0" prefWidth="334.0" promptText="Fecha de Inicio el Proyecto">
+               <VBox.margin>
+                  <Insets bottom="15.0" left="5.0" right="5.0" top="15.0" />
+               </VBox.margin>
+            </JFXDatePicker>
+            <JFXDatePicker fx:id="dp_fechafinal" prefHeight="35.0" prefWidth="334.0" promptText="Fecha del Final del Proyecto">
+               <VBox.margin>
+                  <Insets bottom="15.0" left="5.0" right="5.0" top="15.0" />
+               </VBox.margin>
+            </JFXDatePicker>
+            <Label prefHeight="35.0" prefWidth="351.0" text="DATOS OPCIONALES">
+               <VBox.margin>
+                  <Insets bottom="15.0" left="5.0" right="5.0" top="15.0" />
+               </VBox.margin>
+            </Label>
+            <JFXDatePicker fx:id="dp_fechaRealInicio" prefHeight="35.0" prefWidth="332.0" promptText="Fecha real de Inicio de Proyecto">
+               <VBox.margin>
+                  <Insets bottom="15.0" left="5.0" right="5.0" top="15.0" />
+               </VBox.margin>
+            </JFXDatePicker>
+            <JFXDatePicker fx:id="dp_fechaRealFinal" prefHeight="35.0" prefWidth="349.0" promptText="Fecha real del Fin del Proyecto">
+               <VBox.margin>
+                  <Insets bottom="15.0" left="5.0" right="5.0" top="15.0" />
+               </VBox.margin>
+            </JFXDatePicker>
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <JFXComboBox fx:id="cb_Lider" prefHeight="35.0" prefWidth="394.0" promptText="Lider del Proyecto">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+               </VBox.margin>
+            </JFXComboBox>
+            <JFXButton fx:id="btn_BuscarLider" onAction="#accionBuscarLider" prefHeight="0.0" prefWidth="155.0" text="BUSCAR">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+               </VBox.margin>
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+            </JFXButton>
+            <JFXTextField fx:id="tf_Patrocinador" prefHeight="35.0" promptText="Nombre del Patrocinador">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+               </VBox.margin>
+            </JFXTextField>
+            <JFXTextField fx:id="tf_LiderTecnico" prefHeight="35.0" promptText="Nombre del Lider Tecnico">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+               </VBox.margin>
+            </JFXTextField>
+            <Label prefHeight="35.0" prefWidth="408.0" text="ESTADO DEL PROYECTO">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <VBox alignment="CENTER_LEFT" prefHeight="134.0" prefWidth="397.0">
+               <children>
+                  <JFXRadioButton fx:id="rb_activo" prefHeight="30.0" text="Activo">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="tg_estado" />
+                     </toggleGroup>
+                  </JFXRadioButton>
+                  <JFXRadioButton fx:id="rb_encurso" prefHeight="30.0" text="En Curso" toggleGroup="$tg_estado">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </JFXRadioButton>
+                  <JFXRadioButton fx:id="rb_suspendido" prefHeight="30.0" text="Suspendido" toggleGroup="$tg_estado">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </JFXRadioButton>
+                  <JFXRadioButton fx:id="rb_finalizado" prefHeight="30.0" text="Finalizado" toggleGroup="$tg_estado">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </JFXRadioButton>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+               </VBox.margin>
+            </VBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

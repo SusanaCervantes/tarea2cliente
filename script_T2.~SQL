@@ -47,7 +47,7 @@ CREATE SEQUENCE UNA.Adm_Actividad_seq01
 CREATE TABLE UNA.Adm_Proyecto(
   pro_id Number NOT NULL,
   pro_patrocinador Varchar2(50 ),
-  pro_lusuario Number NOT NULL,
+  pro_lusuario Varchar2(50 ),
   pro_ltecnico Varchar2(50 ),
   pro_fp_inicio Varchar2(30 ) NOT NULL,
   pro_fp_final Varchar2(30 ) NOT NULL,
@@ -142,7 +142,7 @@ ALTER TABLE UNA.Adm_Seguimiento ADD CONSTRAINT PK_Adm_Seguimiento PRIMARY KEY (s
 CREATE OR REPLACE TRIGGER UNA.ts_Adm_Proyecto_Adm_Proyecto_0 BEFORE INSERT
 ON UNA.Adm_Proyecto FOR EACH ROW
 BEGIN
-	if :new.pro_id is null or :new.pro_id = 0 then
+	if :new.pro_id is null or :new.pro_id == 0 then
 		:new.pro_id := UNA.Adm_Proyecto_seq01.nextval;
 	end if;
 END;
@@ -157,7 +157,7 @@ END;
 CREATE OR REPLACE TRIGGER UNA.ts_Adm_Administrador_Adm_Adm_0 BEFORE INSERT
 ON UNA.Adm_Administrador FOR EACH ROW
 BEGIN
-	if :new.adm_id is null or :new.adm_id = 0 then
+	if :new.adm_id is null then or :new.adm_id == 0 then
 		:new.adm_id := UNA.Adm_Administrador_seq01.nextval;
 	end if;		
 END;
@@ -172,7 +172,7 @@ END;
 CREATE OR REPLACE TRIGGER UNA.ts_Adm_Actividad_Adm_Activid_0 BEFORE INSERT
 ON UNA.Adm_Actividad FOR EACH ROW
 BEGIN
-	if :new.act_id is null or :new.act_id = 0 then
+	if :new.act_id is null or :new.act_id == 0 then
 		:new.act_id := UNA.Adm_Actividad_seq01.nextval;
 	end if;
 END;
@@ -187,7 +187,7 @@ END;
 CREATE OR REPLACE TRIGGER UNA.ts_Adm_Seguimiento_Adm_Segui_0 BEFORE INSERT
 ON UNA.Adm_Seguimiento FOR EACH ROW
 BEGIN
-	if :new.seg_id is null or :new.seg_id = 0 then
+	if :new.seg_id is null or :new.seg_id == 0 then
 		:new.seg_id := UNA.Adm_Seguimiento_seq01.nextval;
 	end if;
 END;
@@ -209,8 +209,7 @@ ALTER TABLE UNA.Adm_Seguimiento ADD CONSTRAINT Adm_rel_pro_seg FOREIGN KEY (pro_
 ALTER TABLE UNA.Adm_Actividad ADD CONSTRAINT adm_rel_pro_act FOREIGN KEY (pro_id) REFERENCES UNA.Adm_Proyecto (pro_id)
 ;
 
-ALTER TABLE UNA.Adm_Proyecto ADD CONSTRAINT Adm_Pro_Adm FOREIGN KEY (adm_id) REFERENCES UNA.Adm_Administrador (adm_id)
-;
+
 
 
 -- Grant permissions section -------------------------------------------------

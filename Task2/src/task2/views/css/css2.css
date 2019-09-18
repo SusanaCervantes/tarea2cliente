@@ -1,0 +1,101 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 17/09/2019, 04:57:23 PM
+    Author     : IVAN
+*/
+
+#lbl_titulo{
+    -fx-font-size: 22px;
+}
+
+.root{
+    -fx-background-color: #1d1d1d;
+}
+
+.label{
+    -fx-font: bold 14px "Courier";
+    -fx-alignment: CENTER;
+    -fx-text-fill: whitesmoke;
+}
+
+.jfx-text-field{
+    -jfx-label-float: TRUE;
+    -jfx-focus-color: #009688;
+    -jfx-unfocus-color: whitesmoke;
+    -fx-prompt-text-fill: whitesmoke;
+    -fx-font: bold 14px "Courier";
+    -fx-text-fill: whitesmoke;
+    -fx-alignment: CENTER;
+}
+
+.jfx-button{
+    -fx-background-color: #009688;
+    -fx-font: bold 14px "Courier";
+    -fx-text-fill: whitesmoke;
+}
+
+.jfx-radio-button{
+    -jfx-selected-color: #009688;
+    -jfx-unselected-color: whitesmoke;
+    -fx-text-fill: whitesmoke;
+    -fx-font: bold 14px "Courier";
+}
+
+.jfx-combo-box{
+    -fx-font: bold 14px "Courier";
+    -jfx-focus-color: #009688;
+    -jfx-unfocus-color: whitesmoke;
+    -fx-text-fill: whitesmoke;
+    -jfx-label-float: TRUE;
+}
+
+.jfx-combo-box .list-cell{
+    -fx-text-fill: whitesmoke;
+    -fx-prompt-text-fill: whitesmoke;
+}
+
+.table-view{
+    -fx-control-inner-background: #1d1d1d;
+    -fx-font: bold 16px "Courier";
+    -fx-text-background-color: white;
+    -fx-focus-color: #009688;
+    -fx-border-color: #009688;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+}
+
+.table-view .column-header-background{
+    -fx-background-color: white;
+}
+
+.table-view .column-header .label{
+    -fx-font: bold 14pt "Courier";
+    -fx-text-fill: white;
+}
+
+.table-view .column-header, .table-view .filler{
+    -fx-size: 30;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color:  #009688;
+    -fx-border-color: #009688;
+    -fx-border-insets: 0 10 0 10;
+}
+    
+.table-row-cell{
+    -fx-background-color: -fx-table-cell-border-color, #1d1d1d;
+    -fx-text-fill: white;
+    -fx-font: bold 14px "Courier";
+}
+
+.table-view:focused .table-row-cell:filled:focused:selected{
+    -fx-background-color: #009688;
+    -fx-opacity: 5;
+    -fx-text-background-color: #1d1d1d;
+    -fx-table-cell-border-color: #009688;
+    -fx-table-header-border-color: #009688;  
+    -fx-opacity: 0.9;
+}
