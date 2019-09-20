@@ -7,18 +7,14 @@ package task2.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import com.sun.deploy.uitoolkit.impl.fx.ui.FXAboutDialog;
 import controller.AdministradorDto;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -29,6 +25,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
+import task2.model.Administradordto;
 import task2.service.AdministradorService;
 import task2.util.FlowController;
 import task2.util.Mensaje;
@@ -57,15 +54,17 @@ public class MantAdministradoresController extends Controller implements Initial
     @FXML
     private JFXButton btnGuardar;
     @FXML
+    private JFXButton btnEliminar;
+    @FXML
     private JFXButton btnLimpiar;
     @FXML
-    private TableView<AdministradorDto> tblAdministradores;
+    private TableView<Administradordto> tblAdministradores;
     @FXML
-    private TableColumn<AdministradorDto, String> tcCedula;
+    private TableColumn<Administradordto, String> tcCedula;
     @FXML
-    private TableColumn<AdministradorDto, String> tcNombre;
+    private TableColumn<Administradordto, String> tcNombre;
     @FXML
-    private TableColumn<AdministradorDto, String> tcApellidos;
+    private TableColumn<Administradordto, String> tcApellidos;
     @FXML
     private JFXTextField tfBuscarNombre;
     @FXML
@@ -76,31 +75,28 @@ public class MantAdministradoresController extends Controller implements Initial
     private JFXButton btnAtras;
     
     AdministradorService admS;
-    ObservableList<AdministradorDto> admin;
+    ObservableList<Administradordto> admin;
     List<Node> requeridos = new ArrayList<>();
-    AdministradorDto adm;
-    @FXML
-    private JFXButton btnEliminar;
+    Administradordto adm;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
         admS = new AdministradorService();
         
-  /*      tcCedula.setCellValueFactory(x -> x.getValue().getCedula());
-        tcNombre.setCellValueFactory(x -> x.getValue().getNombre());
-        tcApellidos.setCellValueFactory(x-> x.getValue().getApellidos());*/
+        tcCedula.setCellValueFactory(x -> x.getValue().cedula);
+        tcNombre.setCellValueFactory(x -> x.getValue().nombre);
+        tcApellidos.setCellValueFactory(x-> x.getValue().apellidos);
         
         admin = FXCollections.observableArrayList();
-        adm = new AdministradorDto();
+        adm = new Administradordto();
         
-        nuevo();
+        //nuevo();
         indicarRequeridos();
-    }
-
+    }   
+    
     public void indicarRequeridos() {
         requeridos.clear();
         requeridos.addAll(Arrays.asList(tfApellidos, tfCedula, tfCorreo, tfNombre, tfUsuario, pfContrasena));
@@ -108,26 +104,43 @@ public class MantAdministradoresController extends Controller implements Initial
     
     public void nuevo(){
         unBind();
-        adm = new AdministradorDto();
+        adm = new Administradordto();
         bind();
-    }
-    
-    @Override
-    public void initialize() {
-        limpiar();
     }
 
     @FXML
     private void evtBtnGuardar(ActionEvent event) {
         String invalidos = "";
         invalidos = validarRequeridos();
-        if (invalidos.isEmpty()){
-            bind();
-            System.out.println(adm.getUsuario());
-            String respuesta = admS.guardarAdministrador(adm);
-            new Mensaje().show(Alert.AlertType.INFORMATION, "", respuesta);
+        System.out.println("invalidos "+ invalidos);
+        if (tfApellidos.getText().isEmpty() || tfNombre.getText().isEmpty() || tfCedula.getText().isEmpty() || 
+                tfCorreo.getText().isEmpty() || tfUsuario.getText().isEmpty() || pfContrasena.getText().isEmpty()){
+            new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar administrador", getStage(), "Campos requeridos o con problemas de formato");
         }else{
-            new Mensaje().showModal(Alert.AlertType.ERROR, "Guardar administrador", getStage(), invalidos);
+            //bind();
+            adm.setApellidos(tfApellidos.getText());
+            adm.setNombre(tfNombre.getText());
+            adm.setCedula(tfCedula.getText());
+            adm.setCorreo(tfCorreo.getText());
+            adm.setUsuario(tfUsuario.getText());
+            adm.setContrasena(pfContrasena.getText());
+            adm.setEstado("I");
+            adm = admS.guardarAdministrador(adm);
+            if(adm == null){
+                new Mensaje().show(Alert.AlertType.WARNING, "", "Ocurrio un error al guardar el administrador");
+            }else{
+                bind();
+                new Mensaje().show(Alert.AlertType.INFORMATION, "", "Administrador guardado con exito");
+            }
+        }
+    }
+
+    @FXML
+    private void evtBtnEliminar(ActionEvent event) {
+        if(adm.getId() != null){
+            new Mensaje().show(Alert.AlertType.INFORMATION, "", admS.eliminarAdministrador(adm.getId()));
+        }else{
+            new Mensaje().show(Alert.AlertType.INFORMATION, "", "Primero debe seleccionar un administrador");
         }
     }
 
@@ -154,50 +167,21 @@ public class MantAdministradoresController extends Controller implements Initial
         if(!tfBuscarApellidos.getText().isEmpty()){
             ap = tfBuscarApellidos.getText();
         }
-        admin = (FXCollections.observableArrayList((List<AdministradorDto>)admS.getAdministradores(nom, ap)));
+        admin = (FXCollections.observableArrayList((List<Administradordto>)admS.getAdministradores(nom, ap)));
         if(!admin.isEmpty())
             tblAdministradores.setItems(admin);
         else 
             new Mensaje().show(Alert.AlertType.INFORMATION, "", "No hay coincidencias de la busqueda");
     }
-    
+
     @FXML
     private void evtBtnAtras(ActionEvent event) {
         FlowController.getInstance().goView("Menu");
     }
-    
-    public void limpiar(){
-        tfApellidos.clear();
-        tfBuscarApellidos.clear();
-        tfBuscarNombre.clear();
-        tfCedula.clear();
-        tfCorreo.clear();
-        tfNombre.clear();
-        tfUsuario.clear();
-        cbEstado.setSelected(false);
-        pfContrasena.clear();
-        admin.clear();
-        tblAdministradores.getItems().clear();
-    }
-    
-    private void bind() {
-      /*  tfApellidos.textProperty().bindBidirectional(adm.getApellidos());
-        tfCedula.textProperty().bindBidirectional(adm.getCedula());
-        tfCorreo.textProperty().bindBidirectional(adm.getCorreo());
-        tfNombre.textProperty().bindBidirectional(adm.getNombre());
-        tfUsuario.textProperty().bindBidirectional(adm.getUsuario());
-        pfContrasena.textProperty().bindBidirectional(adm.getContrasena());*/
-        //cbEstado.setSelected(false);
-    }
-    
-    private void unBind() {
-        tfApellidos.textProperty().unbindBidirectional(adm.getApellidos());
-        tfCedula.textProperty().unbindBidirectional(adm.getCedula());
-        tfCorreo.textProperty().unbindBidirectional(adm.getCorreo());
-        tfNombre.textProperty().unbindBidirectional(adm.getNombre());
-        tfUsuario.textProperty().unbindBidirectional(adm.getUsuario());
-        pfContrasena.textProperty().unbindBidirectional(adm.getContrasena());
-        //cbEstado.setSelected(false);
+
+    @Override
+    public void initialize() {
+        
     }
     
     public String validarRequeridos() {
@@ -226,14 +210,39 @@ public class MantAdministradoresController extends Controller implements Initial
             return "Campos requeridos o con problemas de formato [" + invalidos + "].";
         }
     }
-
-    @FXML
-    private void evtBtnEliminar(ActionEvent event) {
-        if(adm.getId() != null){
-            new Mensaje().show(Alert.AlertType.INFORMATION, "", admS.eliminarAdministrador(adm.getId()));
-        }else{
-            new Mensaje().show(Alert.AlertType.INFORMATION, "", "Primero debe seleccionar un administrador");
-        }
-        
+    
+    private void bind() {
+        tfApellidos.textProperty().bindBidirectional(adm.apellidos);
+        tfCedula.textProperty().bindBidirectional(adm.cedula);
+        tfCorreo.textProperty().bindBidirectional(adm.correo);
+        tfNombre.textProperty().bindBidirectional(adm.nombre);
+        tfUsuario.textProperty().bindBidirectional(adm.usuario);
+        pfContrasena.textProperty().bindBidirectional(adm.contrasena);
+        //cbEstado.setSelected(false);
     }
+    
+    private void unBind() {
+        tfApellidos.textProperty().unbindBidirectional(adm.apellidos);
+        tfCedula.textProperty().unbindBidirectional(adm.cedula);
+        tfCorreo.textProperty().unbindBidirectional(adm.correo);
+        tfNombre.textProperty().unbindBidirectional(adm.nombre);
+        tfUsuario.textProperty().unbindBidirectional(adm.usuario);
+        pfContrasena.textProperty().unbindBidirectional(adm.contrasena);
+        //cbEstado.setSelected(false);
+    }
+    
+    public void limpiar(){
+        tfApellidos.clear();
+        tfBuscarApellidos.clear();
+        tfBuscarNombre.clear();
+        tfCedula.clear();
+        tfCorreo.clear();
+        tfNombre.clear();
+        tfUsuario.clear();
+        cbEstado.setSelected(false);
+        pfContrasena.clear();
+        admin.clear();
+        tblAdministradores.getItems().clear();
+    }
+    
 }

@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox alignment="CENTER" prefHeight="578.0" prefWidth="777.0" style="-fx-background-color: #90CAF9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="task2.controller.MantAdministradoresController">
+<HBox alignment="CENTER" prefHeight="578.0" prefWidth="832.0" style="-fx-background-color: #90CAF9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="task2.controller.MantAdministradoresController">
    <children>
-      <AnchorPane id="AnchorPane" prefHeight="564.0" prefWidth="777.0" style="-fx-background-color: #90CAF9;" styleClass="mainFxmlClass">
+      <AnchorPane id="AnchorPane" prefHeight="578.0" prefWidth="807.0" style="-fx-background-color: #90CAF9;" styleClass="mainFxmlClass">
           <stylesheets>
               <URL value="@/task2/views/css/css.css" />
           </stylesheets>
