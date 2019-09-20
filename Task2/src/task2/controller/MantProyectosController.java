@@ -21,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import task2.model.Administradordto;
+import task2.util.FlowController;
 
 /**
  * FXML Controller class
@@ -101,6 +102,8 @@ public class MantProyectosController extends Controller implements Initializable
     
     @FXML
     private void accionAtras(ActionEvent event) {
+        FlowController.getInstance().goMain();
+        this.getStage().close();
     }
 
     @FXML
