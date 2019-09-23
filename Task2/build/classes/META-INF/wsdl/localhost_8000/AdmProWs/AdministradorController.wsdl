@@ -4,12 +4,6 @@
 <xsd:import namespace="http://controller/" schemaLocation="http://localhost:8000/AdmProWs/AdministradorController?xsd=1"/>
 </xsd:schema>
 </types>
-<message name="eliminarAdministrador">
-<part name="parameters" element="tns:eliminarAdministrador"/>
-</message>
-<message name="eliminarAdministradorResponse">
-<part name="parameters" element="tns:eliminarAdministradorResponse"/>
-</message>
 <message name="guardarAdministrador">
 <part name="parameters" element="tns:guardarAdministrador"/>
 </message>
@@ -22,11 +16,13 @@
 <message name="getAdministradoresResponse">
 <part name="parameters" element="tns:getAdministradoresResponse"/>
 </message>
+<message name="eliminarAdministrador">
+<part name="parameters" element="tns:eliminarAdministrador"/>
+</message>
+<message name="eliminarAdministradorResponse">
+<part name="parameters" element="tns:eliminarAdministradorResponse"/>
+</message>
 <portType name="AdministradorController">
-<operation name="eliminarAdministrador">
-<input wsam:Action="http://controller/AdministradorController/eliminarAdministradorRequest" message="tns:eliminarAdministrador"/>
-<output wsam:Action="http://controller/AdministradorController/eliminarAdministradorResponse" message="tns:eliminarAdministradorResponse"/>
-</operation>
 <operation name="guardarAdministrador">
 <input wsam:Action="http://controller/AdministradorController/guardarAdministradorRequest" message="tns:guardarAdministrador"/>
 <output wsam:Action="http://controller/AdministradorController/guardarAdministradorResponse" message="tns:guardarAdministradorResponse"/>
@@ -35,18 +31,13 @@
 <input wsam:Action="http://controller/AdministradorController/getAdministradoresRequest" message="tns:getAdministradores"/>
 <output wsam:Action="http://controller/AdministradorController/getAdministradoresResponse" message="tns:getAdministradoresResponse"/>
 </operation>
+<operation name="eliminarAdministrador">
+<input wsam:Action="http://controller/AdministradorController/eliminarAdministradorRequest" message="tns:eliminarAdministrador"/>
+<output wsam:Action="http://controller/AdministradorController/eliminarAdministradorResponse" message="tns:eliminarAdministradorResponse"/>
+</operation>
 </portType>
 <binding name="AdministradorControllerPortBinding" type="tns:AdministradorController">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="eliminarAdministrador">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
 <operation name="guardarAdministrador">
 <soap:operation soapAction=""/>
 <input>
@@ -57,6 +48,15 @@
 </output>
 </operation>
 <operation name="getAdministradores">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="eliminarAdministrador">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
