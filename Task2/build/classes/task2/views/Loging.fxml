@@ -14,7 +14,7 @@
       <ImageView fx:id="imv_pass" fitHeight="66.0" fitWidth="65.0" layoutX="22.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true" />
       <JFXButton fx:id="btn_Registrarse" layoutX="246.0" layoutY="331.0" onAction="#accionRegistrarse" prefHeight="42.0" prefWidth="164.0" text="REGISTRARSE" />
       <JFXButton fx:id="btn_Acceder" layoutX="422.0" layoutY="331.0" onAction="#accion_Acceder" prefHeight="42.0" prefWidth="164.0" text="ACCEDER" />
-      <JFXTextField layoutX="111.0" layoutY="158.0" prefHeight="42.0" prefWidth="469.0" promptText="USER NAME / NOMBRE DE USUARIO" />
-      <JFXTextField layoutX="111.0" layoutY="240.0" prefHeight="42.0" prefWidth="469.0" promptText="PASSWORD / CONTRASEÑA" />
+      <JFXTextField fx:id="txtUsuario" layoutX="111.0" layoutY="158.0" prefHeight="42.0" prefWidth="469.0" promptText="USER NAME / NOMBRE DE USUARIO" />
+      <JFXTextField fx:id="txtContrasena" layoutX="111.0" layoutY="240.0" prefHeight="42.0" prefWidth="469.0" promptText="PASSWORD / CONTRASEÑA" />
    </children>
 </AnchorPane>

@@ -27,6 +27,7 @@ public class ObjectFactory {
     private final static QName _EliminarAdministradorResponse_QNAME = new QName("http://controller/", "eliminarAdministradorResponse");
     private final static QName _GetAdministradores_QNAME = new QName("http://controller/", "getAdministradores");
     private final static QName _GuardarAdministradorResponse_QNAME = new QName("http://controller/", "guardarAdministradorResponse");
+    private final static QName _AdministradorDto_QNAME = new QName("http://controller/", "AdministradorDto");
     private final static QName _GetAdministradoresResponse_QNAME = new QName("http://controller/", "getAdministradoresResponse");
     private final static QName _EliminarAdministrador_QNAME = new QName("http://controller/", "eliminarAdministrador");
     private final static QName _GuardarAdministrador_QNAME = new QName("http://controller/", "guardarAdministrador");
@@ -52,6 +53,14 @@ public class ObjectFactory {
      */
     public EliminarAdministrador createEliminarAdministrador() {
         return new EliminarAdministrador();
+    }
+
+    /**
+     * Create an instance of {@link AdministradorDto }
+     * 
+     */
+    public AdministradorDto createAdministradorDto() {
+        return new AdministradorDto();
     }
 
     /**
@@ -87,14 +96,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link AdministradorDto }
-     * 
-     */
-    public AdministradorDto createAdministradorDto() {
-        return new AdministradorDto();
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link EliminarAdministradorResponse }{@code >}}
      * 
      */
@@ -119,6 +120,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://controller/", name = "guardarAdministradorResponse")
     public JAXBElement<GuardarAdministradorResponse> createGuardarAdministradorResponse(GuardarAdministradorResponse value) {
         return new JAXBElement<GuardarAdministradorResponse>(_GuardarAdministradorResponse_QNAME, GuardarAdministradorResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link AdministradorDto }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://controller/", name = "AdministradorDto")
+    public JAXBElement<AdministradorDto> createAdministradorDto(AdministradorDto value) {
+        return new JAXBElement<AdministradorDto>(_AdministradorDto_QNAME, AdministradorDto.class, null, value);
     }
 
     /**

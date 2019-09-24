@@ -4,4 +4,6 @@
     <system systemId="http://localhost:8000/AdministradorController/AdministradorController?xsd=1" uri="wsdl/localhost_8000/AdministradorController/AdministradorController.xsd_1.xsd"/>
     <system systemId="http://localhost:8000/AdmProWs/AdministradorController?wsdl" uri="wsdl/localhost_8000/AdmProWs/AdministradorController.wsdl"/>
     <system systemId="http://localhost:8000/AdmProWs/AdministradorController?xsd=1" uri="wsdl/localhost_8000/AdmProWs/AdministradorController.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/AdmProWS/AdministradorController?wsdl" uri="wsdl/localhost_8080/AdmProWS/AdministradorController.wsdl"/>
+    <system systemId="http://localhost:8080/AdmProWS/AdministradorController?xsd=1" uri="wsdl/localhost_8080/AdmProWS/AdministradorController.xsd_1.xsd"/>
 </catalog>

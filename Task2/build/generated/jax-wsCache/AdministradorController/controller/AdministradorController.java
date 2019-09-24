@@ -27,31 +27,16 @@ public interface AdministradorController {
 
     /**
      * 
-     * @param id
-     * @return
-     *     returns java.lang.String
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "eliminarAdministrador", targetNamespace = "http://controller/", className = "controller.EliminarAdministrador")
-    @ResponseWrapper(localName = "eliminarAdministradorResponse", targetNamespace = "http://controller/", className = "controller.EliminarAdministradorResponse")
-    @Action(input = "http://controller/AdministradorController/eliminarAdministradorRequest", output = "http://controller/AdministradorController/eliminarAdministradorResponse")
-    public String eliminarAdministrador(
-        @WebParam(name = "id", targetNamespace = "")
-        Long id);
-
-    /**
-     * 
      * @param administrador
      * @return
-     *     returns java.lang.String
+     *     returns controller.AdministradorDto
      */
     @WebMethod
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "guardarAdministrador", targetNamespace = "http://controller/", className = "controller.GuardarAdministrador")
     @ResponseWrapper(localName = "guardarAdministradorResponse", targetNamespace = "http://controller/", className = "controller.GuardarAdministradorResponse")
     @Action(input = "http://controller/AdministradorController/guardarAdministradorRequest", output = "http://controller/AdministradorController/guardarAdministradorResponse")
-    public String guardarAdministrador(
+    public AdministradorDto guardarAdministrador(
         @WebParam(name = "administrador", targetNamespace = "")
         AdministradorDto administrador);
 
@@ -72,5 +57,20 @@ public interface AdministradorController {
         String nombre,
         @WebParam(name = "apellidos", targetNamespace = "")
         String apellidos);
+
+    /**
+     * 
+     * @param id
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "eliminarAdministrador", targetNamespace = "http://controller/", className = "controller.EliminarAdministrador")
+    @ResponseWrapper(localName = "eliminarAdministradorResponse", targetNamespace = "http://controller/", className = "controller.EliminarAdministradorResponse")
+    @Action(input = "http://controller/AdministradorController/eliminarAdministradorRequest", output = "http://controller/AdministradorController/eliminarAdministradorResponse")
+    public String eliminarAdministrador(
+        @WebParam(name = "id", targetNamespace = "")
+        Long id);
 
 }

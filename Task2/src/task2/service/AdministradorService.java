@@ -37,6 +37,24 @@ public class AdministradorService {
         }
         return adms2;
     }
+     
+    public boolean log(String usuario, String contrasena){
+        List<AdministradorDto> adms = port.getAdmiLogging(usuario, contrasena);
+        List<Administradordto> adms2 = new ArrayList<>();
+        
+        for(AdministradorDto a: adms){
+            adms2.add(new Administradordto(a));
+        }
+        
+        if(!adms2.get(0).getCedula().isEmpty()){
+            return true;
+        }else{
+            return false;
+        }
+        
+        
+    }
+    
     
     public String eliminarAdministrador(Long id){
         return port.eliminarAdministrador(id);

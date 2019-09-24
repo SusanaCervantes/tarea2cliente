@@ -6,16 +6,20 @@
 package task2.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import task2.service.AdministradorService;
 import task2.util.FlowController;
+import task2.util.Mensaje;
 
 /**
  *
@@ -35,7 +39,9 @@ public class LogingController extends Controller implements Initializable {
     @FXML
     private JFXButton btn_Acceder;
     @FXML
-    private AnchorPane ach_root;
+    private JFXTextField txtUsuario;
+    @FXML
+    private JFXTextField txtContrasena;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -56,11 +62,36 @@ public class LogingController extends Controller implements Initializable {
     private void accionRegistrarse(ActionEvent event) {
     }
 
+    AdministradorService admS;
+    
     @FXML
     private void accion_Acceder(ActionEvent event) {
-        getStage().close();
-        FlowController.getInstance().goMain();
-        FlowController.getInstance().goView("Menu");
+        boolean ban=validar();
+        if(!ban){
+            new Mensaje().show(Alert.AlertType.WARNING, "", "Campos Vacios");
+        }else{
+//            boolean acceder = admS.log(txtUsuario.getText(), txtContrasena.getText());
+//            if(acceder){
+                getStage().close();
+                FlowController.getInstance().goMain();
+                FlowController.getInstance().goView("Menu");
+//            }else{
+//                new Mensaje().show(Alert.AlertType.ERROR, "", "Usuario o contraseña incorrectos");
+//            }
+        }
+        
+        
+    }
+    
+    public boolean validar(){
+        boolean ban=true;
+        if(txtUsuario.getText().isEmpty()||txtUsuario.getText().equals("")||txtUsuario.getText().equals("%")){
+            ban=false;
+        }
+        if(txtContrasena.getText().isEmpty()||txtContrasena.getText().equals("")||txtContrasena.getText().equals("%")){
+            ban=false;
+        }
+        return ban;
     }
     
 }
