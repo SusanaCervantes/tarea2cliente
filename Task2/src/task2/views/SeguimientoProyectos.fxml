@@ -28,7 +28,7 @@
                         <JFXButton onAction="#btnAtras" prefHeight="35.0" prefWidth="76.0" text="Atras" />
                      </children>
                   </HBox>
-                  <HBox prefHeight="142.0" prefWidth="691.0" spacing="50.0">
+                  <HBox prefHeight="142.0" prefWidth="691.0" spacing="50.0" style="-fx-background-color: rgba(0, 0, 0, 0.2);">
                      <children>
                         <JFXComboBox fx:id="cbProyecto" prefHeight="35.0" prefWidth="151.0" promptText="Proyecto" />
                         <VBox alignment="CENTER" prefHeight="142.0" prefWidth="151.0" spacing="20.0">
@@ -51,7 +51,7 @@
                         <JFXButton onAction="#btnEliminar" prefHeight="35.0" prefWidth="151.0" text="Eliminar" />
                      </children>
                   </HBox>
-                  <TableView fx:id="tblSeguimiento" prefHeight="302.0" prefWidth="697.0">
+                  <TableView fx:id="tblSeguimiento" prefHeight="273.0" prefWidth="731.0">
                     <columns>
                       <TableColumn fx:id="tcId" prefWidth="74.0" text="Id" />
                       <TableColumn fx:id="tcFecha" prefWidth="140.0" text="Fecha" />

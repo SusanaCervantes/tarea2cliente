@@ -13,13 +13,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import task2.model.Proyectodto;
 import task2.model.Seguimientodto;
 import task2.util.FlowController;
 
@@ -31,7 +31,7 @@ import task2.util.FlowController;
 public class SeguimientoProyectosController extends Controller implements Initializable {
 
     @FXML
-    private JFXComboBox<String> cbProyecto;
+    private JFXComboBox<Proyectodto> cbProyecto;
     @FXML
     private TableView<Seguimientodto> tblSeguimiento;
     @FXML
@@ -50,6 +50,7 @@ public class SeguimientoProyectosController extends Controller implements Initia
     private JFXTextField tfPorcentajeAvance;
 
     ObservableList<Seguimientodto> seguimientos;
+    ObservableList<Proyectodto> proyectos;
     Seguimientodto seg;
     
     @Override
@@ -61,11 +62,18 @@ public class SeguimientoProyectosController extends Controller implements Initia
         tcPorcentaje.setCellValueFactory(x-> x.getValue().porcentaje);
         
         seguimientos = FXCollections.observableArrayList();
+        proyectos = FXCollections.observableArrayList();
     }    
 
     @Override
     public void initialize() {
         seg = new Seguimientodto();
+        
+        proyectos.clear();
+        cbProyecto.getItems().clear();
+        
+        //proyectos 
+        cbProyecto.getItems().addAll(proyectos);
     }
 
     @FXML

@@ -17,13 +17,14 @@ public class Seguimientodto {
     public SimpleStringProperty fecha;
     public SimpleStringProperty porcentaje;
     public Long version;
+    
            
     public Seguimientodto()
     {
     
     }
     
-    /*public Seguimientodto(Seguimiento seg)
+    /*public Seguimientodto(SeguimientoDto seg)
     {
         this.id = seg.getSegId();
         this.detalle = seg.getSegDetalle();
