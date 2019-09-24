@@ -42,6 +42,7 @@ public class MenuController extends Controller implements Initializable {
 
     @FXML
     private void evtBtnSeguimiento(ActionEvent event) {
+        FlowController.getInstance().goView("SeguimientoProyectos");
     }
 
     @Override
