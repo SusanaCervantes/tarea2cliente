@@ -10,6 +10,8 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -17,11 +19,16 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseEvent;
 import task2.model.Proyectodto;
 import task2.model.Seguimientodto;
+import task2.service.SeguimientoService;
 import task2.util.FlowController;
+import task2.util.Formato;
+import task2.util.Mensaje;
 
 /**
  * FXML Controller class
@@ -52,6 +59,8 @@ public class SeguimientoProyectosController extends Controller implements Initia
     ObservableList<Seguimientodto> seguimientos;
     ObservableList<Proyectodto> proyectos;
     Seguimientodto seg;
+    SeguimientoService ss;
+    Proyectodto proyecto;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -61,8 +70,11 @@ public class SeguimientoProyectosController extends Controller implements Initia
         tcDetalle.setCellValueFactory(x -> x.getValue().detalle);
         tcPorcentaje.setCellValueFactory(x-> x.getValue().porcentaje);
         
+        tfPorcentajeAvance.setTextFormatter(Formato.getInstance().integerFormat());
+        
         seguimientos = FXCollections.observableArrayList();
         proyectos = FXCollections.observableArrayList();
+        ss = new SeguimientoService();
     }    
 
     @Override
@@ -71,9 +83,11 @@ public class SeguimientoProyectosController extends Controller implements Initia
         
         proyectos.clear();
         cbProyecto.getItems().clear();
+        limpiar();
         
         //proyectos 
         cbProyecto.getItems().addAll(proyectos);
+        
     }
 
     @FXML
@@ -83,10 +97,32 @@ public class SeguimientoProyectosController extends Controller implements Initia
 
     @FXML
     private void btnGuardar(ActionEvent event) {
+        if(taDetalle.getText().isEmpty() || dpFecha.getValue() == null || tfPorcentajeAvance.getText().isEmpty()){
+            new Mensaje().show(Alert.AlertType.INFORMATION, "Guardar seguimiento", "Falta informacion");
+        }else{
+            if(proyecto.proId != null){
+                seg.setDetalle(taDetalle.getText());
+                seg.setFecha(dpFecha.getValue().toString());
+                seg.setPorcentaje(tfPorcentajeAvance.getText());
+
+                seg = ss.guardarSeguimiento(seg);
+                if(seg == null){
+                    new Mensaje().show(Alert.AlertType.INFORMATION, "Guardar seguimiento", "Ocurrio un error al guardar el seguimiento");
+                }
+            }else{
+                new Mensaje().show(Alert.AlertType.INFORMATION, "Guardar seguimiento", "Primero debe seleccionar un proyecto");
+            }
+        }
     }
 
     @FXML
     private void btnEliminar(ActionEvent event) {
+        if(seg.getId() == null){
+            new Mensaje().show(Alert.AlertType.INFORMATION, "", "Primero debe seleccionar un seguimiento");
+        }else{
+            new Mensaje().show(Alert.AlertType.INFORMATION, "", ss.eliminarSeguimiento(seg.id));
+            limpiar();
+        }
     }
     
     private void limpiar(){
@@ -96,10 +132,33 @@ public class SeguimientoProyectosController extends Controller implements Initia
         
         cbProyecto.getSelectionModel().clearSelection();
         tblSeguimiento.getItems().clear();
+        seg = new Seguimientodto();
     }
 
     @FXML
     private void btnAtras(ActionEvent event) {
         FlowController.getInstance().goView("Menu");
+    }
+
+    @FXML
+    private void evtTblSeguimientos(MouseEvent event) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-d");
+        if(tblSeguimiento.getSelectionModel().getSelectedItem() != null){
+            seg = tblSeguimiento.getSelectionModel().getSelectedItem();
+            tfPorcentajeAvance.setText(seg.getPorcentaje());
+            taDetalle.setText(seg.getDetalle());
+            dpFecha.setValue(LocalDate.parse(seg.getFecha(), formatter));
+        }
+    }
+
+    @FXML
+    private void evtCbProyectos(MouseEvent event) {
+        //if(cbProyecto.getSelectionModel().getSelectedItem() != null){
+            proyecto = cbProyecto.getSelectionModel().getSelectedItem();
+            seg.setProyecto(proyecto);
+            //get seguimientos
+            seguimientos = (FXCollections.observableArrayList(ss.getSeguimientos(new Long(1))));//new Long(proyecto.proId.get()))));
+            tblSeguimiento.setItems(seguimientos);
+        //}
     }
 }

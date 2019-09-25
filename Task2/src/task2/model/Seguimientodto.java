@@ -5,6 +5,7 @@
  */
 package task2.model;
 
+import controller.SeguimientoDto;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
@@ -12,26 +13,38 @@ import javafx.beans.property.SimpleStringProperty;
  * @author IVAN
  */
 public class Seguimientodto {
+
     public Long id;
     public SimpleStringProperty detalle;
     public SimpleStringProperty fecha;
     public SimpleStringProperty porcentaje;
     public Long version;
-    
-           
-    public Seguimientodto()
-    {
-    
+    public Proyectodto proyecto;
+
+    public Seguimientodto() {
+        detalle = new SimpleStringProperty();
+        fecha = new SimpleStringProperty();
+        porcentaje = new SimpleStringProperty();
+        proyecto = new Proyectodto();
     }
-    
-    /*public Seguimientodto(SeguimientoDto seg)
-    {
-        this.id = seg.getSegId();
-        this.detalle = seg.getSegDetalle();
-        this.fecha = seg.getSegFecha();
-        this.porcentaje = seg.getSegPorcentaje().toString();
-        this.version = seg.getSegVersion();
-    }*/
+
+    public SeguimientoDto toSeguimientoDto(SeguimientoDto seg) {
+        //seg = new SeguimientoDto();
+        seg.setId(this.getId());
+        seg.setDetalle(this.getDetalle());
+        seg.setFecha(this.getFecha());
+        seg.setPorcentaje(this.getPorcentaje());
+        seg.setVersion(this.getVersion());
+        return seg;
+    }
+
+    public Seguimientodto(SeguimientoDto seg) {
+        this();
+        this.id = seg.getId();
+        this.detalle.set(seg.getDetalle());
+        this.fecha.set(seg.getFecha());
+        this.porcentaje.set(seg.getPorcentaje());
+    }
 
     public Long getId() {
         return id;
@@ -71,5 +84,13 @@ public class Seguimientodto {
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    public Proyectodto getProyecto() {
+        return proyecto;
+    }
+
+    public void setProyecto(Proyectodto proyecto) {
+        this.proyecto = proyecto;
     }
 }
