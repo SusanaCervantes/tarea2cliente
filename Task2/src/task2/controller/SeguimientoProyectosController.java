@@ -71,6 +71,7 @@ public class SeguimientoProyectosController extends Controller implements Initia
         tcPorcentaje.setCellValueFactory(x-> x.getValue().porcentaje);
         
         tfPorcentajeAvance.setTextFormatter(Formato.getInstance().integerFormat());
+        taDetalle.setTextFormatter(Formato.getInstance().letrasFormat(200));
         
         seguimientos = FXCollections.observableArrayList();
         proyectos = FXCollections.observableArrayList();

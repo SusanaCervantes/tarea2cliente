@@ -32,6 +32,16 @@ and open the template in the editor.
     -fx-alignment: CENTER;
 }
 
+.jfx-text-area{
+    -jfx-label-float: TRUE;
+    -jfx-focus-color: #009688;
+    -jfx-unfocus-color: whitesmoke;
+    -fx-prompt-text-fill: whitesmoke;
+    -fx-font: bold 14px "Courier";
+    -fx-text-fill: whitesmoke;
+    -fx-alignment: CENTER;
+}
+
 .jfx-button{
     -fx-background-color: #009688;
     -fx-font: bold 14px "Courier";
