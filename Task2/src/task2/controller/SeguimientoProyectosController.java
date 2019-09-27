@@ -24,8 +24,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import task2.model.Proyectodto;
+/*
 import task2.model.Seguimientodto;
 import task2.service.SeguimientoService;
+*/
 import task2.util.FlowController;
 import task2.util.Formato;
 import task2.util.Mensaje;
@@ -39,7 +41,7 @@ public class SeguimientoProyectosController extends Controller implements Initia
 
     @FXML
     private JFXComboBox<Proyectodto> cbProyecto;
-    @FXML
+    /*@FXML
     private TableView<Seguimientodto> tblSeguimiento;
     @FXML
     private TableColumn<Seguimientodto, String> tcId;
@@ -48,7 +50,7 @@ public class SeguimientoProyectosController extends Controller implements Initia
     @FXML
     private TableColumn<Seguimientodto, String> tcDetalle;
     @FXML
-    private TableColumn<Seguimientodto, String> tcPorcentaje;
+    private TableColumn<Seguimientodto, String> tcPorcentaje;*/
     @FXML
     private JFXDatePicker dpFecha;
     @FXML
@@ -56,15 +58,16 @@ public class SeguimientoProyectosController extends Controller implements Initia
     @FXML
     private JFXTextField tfPorcentajeAvance;
 
-    ObservableList<Seguimientodto> seguimientos;
+    //ObservableList<Seguimientodto> seguimientos;
     ObservableList<Proyectodto> proyectos;
-    Seguimientodto seg;
-    SeguimientoService ss;
+    //Seguimientodto seg;
+    //SeguimientoService ss;
     Proyectodto proyecto;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        /*
         tcId.setCellValueFactory(x -> new SimpleStringProperty(x.getValue().id.toString()));
         tcFecha.setCellValueFactory(x-> x.getValue().fecha);
         tcDetalle.setCellValueFactory(x -> x.getValue().detalle);
@@ -76,11 +79,12 @@ public class SeguimientoProyectosController extends Controller implements Initia
         seguimientos = FXCollections.observableArrayList();
         proyectos = FXCollections.observableArrayList();
         ss = new SeguimientoService();
+        */
     }    
 
     @Override
     public void initialize() {
-        seg = new Seguimientodto();
+        //seg = new Seguimientodto();
         
         proyectos.clear();
         cbProyecto.getItems().clear();
@@ -98,6 +102,7 @@ public class SeguimientoProyectosController extends Controller implements Initia
 
     @FXML
     private void btnGuardar(ActionEvent event) {
+        /*
         if(taDetalle.getText().isEmpty() || dpFecha.getValue() == null || tfPorcentajeAvance.getText().isEmpty()){
             new Mensaje().show(Alert.AlertType.INFORMATION, "Guardar seguimiento", "Falta informacion");
         }else{
@@ -114,19 +119,22 @@ public class SeguimientoProyectosController extends Controller implements Initia
                 new Mensaje().show(Alert.AlertType.INFORMATION, "Guardar seguimiento", "Primero debe seleccionar un proyecto");
             }
         }
+        */
     }
 
     @FXML
     private void btnEliminar(ActionEvent event) {
-        if(seg.getId() == null){
+        /*if(seg.getId() == null){
             new Mensaje().show(Alert.AlertType.INFORMATION, "", "Primero debe seleccionar un seguimiento");
         }else{
             new Mensaje().show(Alert.AlertType.INFORMATION, "", ss.eliminarSeguimiento(seg.id));
             limpiar();
-        }
+        }*/
     }
     
+    
     private void limpiar(){
+        /*
         tfPorcentajeAvance.clear();
         taDetalle.clear();
         dpFecha.setValue(null);
@@ -134,6 +142,7 @@ public class SeguimientoProyectosController extends Controller implements Initia
         cbProyecto.getSelectionModel().clearSelection();
         tblSeguimiento.getItems().clear();
         seg = new Seguimientodto();
+*/
     }
 
     @FXML
@@ -143,6 +152,7 @@ public class SeguimientoProyectosController extends Controller implements Initia
 
     @FXML
     private void evtTblSeguimientos(MouseEvent event) {
+        /*
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-d");
         if(tblSeguimiento.getSelectionModel().getSelectedItem() != null){
             seg = tblSeguimiento.getSelectionModel().getSelectedItem();
@@ -150,16 +160,17 @@ public class SeguimientoProyectosController extends Controller implements Initia
             taDetalle.setText(seg.getDetalle());
             dpFecha.setValue(LocalDate.parse(seg.getFecha(), formatter));
         }
+*/
     }
 
     @FXML
     private void evtCbProyectos(MouseEvent event) {
         //if(cbProyecto.getSelectionModel().getSelectedItem() != null){
-            proyecto = cbProyecto.getSelectionModel().getSelectedItem();
+          /*  proyecto = cbProyecto.getSelectionModel().getSelectedItem();
             seg.setProyecto(proyecto);
             //get seguimientos
             seguimientos = (FXCollections.observableArrayList(ss.getSeguimientos(new Long(1))));//new Long(proyecto.proId.get()))));
-            tblSeguimiento.setItems(seguimientos);
+            tblSeguimiento.setItems(seguimientos);*/
         //}
     }
 }
