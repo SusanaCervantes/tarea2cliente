@@ -5,6 +5,7 @@
  */
 package task2.model;
 
+import controller.AdministradorDto;
 import controller.ProyectosDto;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,8 +59,19 @@ public class Proyectodto {
         //this.actividadList = pro.getActividadList()
     }
     
-    public void DtoTodto(ProyectosDto pro){
-        Proyectodto proy = new Proyectodto();
+    public ProyectosDto DtoTodto(){
+        ProyectosDto proy = new ProyectosDto();
+        proy.setProId(Long.valueOf(this.getProId()));
+        proy.setProPatrocinador(this.getProPatrocinador());
+        proy.setProLtecnico(this.getProLtecnico());
+        proy.setProFpInicio(this.getProFpInicio());
+        proy.setProFpFinal(this.getProFpFinal());
+        proy.setProFrInicio(this.getProFrInicio());
+        proy.setProFrFinal(this.getProFrFinal());
+        proy.setProEstado(this.getProEstado());
+        proy.setAdmId(this.getAdmId().AdministradordtoToDto(new AdministradorDto()));
+        proy.setProNombre(this.getProNombre());
+        return proy;
     }
 
     public String getProId() {

@@ -112,14 +112,26 @@
                   <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
                </VBox.margin>
             </JFXComboBox>
-            <JFXButton fx:id="btn_BuscarLider" onAction="#accionBuscarLider" prefHeight="0.0" prefWidth="155.0" text="BUSCAR">
-               <VBox.margin>
-                  <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
-               </VBox.margin>
-               <graphic>
-                  <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-               </graphic>
-            </JFXButton>
+            <HBox alignment="CENTER" prefHeight="64.0" prefWidth="490.0">
+               <children>
+                  <JFXButton fx:id="btn_BuscarLider" onAction="#accionBuscarLider" prefHeight="38.0" prefWidth="165.0" text="BUSCAR">
+                     <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                     </graphic>
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </HBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="btn_agregar" onAction="#accionAgregarL" prefHeight="38.0" prefWidth="165.0" text="AGREGAR">
+                     <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                     </graphic>
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </HBox.margin>
+                  </JFXButton>
+               </children>
+            </HBox>
             <JFXTextField fx:id="tf_Patrocinador" labelFloat="true" prefHeight="35.0" promptText="Nombre del Patrocinador">
                <VBox.margin>
                   <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />

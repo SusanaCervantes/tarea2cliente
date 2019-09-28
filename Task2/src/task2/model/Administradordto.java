@@ -81,6 +81,7 @@ public class Administradordto {
         adm.setUsuario(this.getUsuario());
         return adm;
     }
+    
 
     public Long getId() {
         return id;
@@ -153,4 +154,11 @@ public class Administradordto {
     public void setVersion(Long version) {
         this.version = version;
     }
+
+    @Override
+    public String toString() {
+        return nombre.get();
+    }
+    
+    
 }

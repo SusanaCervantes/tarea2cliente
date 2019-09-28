@@ -170,7 +170,7 @@ public class FlowController {
         stage.setScene(scene);
         stage.setResizable(resizable.booleanValue());
         stage.setMaximized(maximized.booleanValue());
-        stage.show();
+        stage.showAndWait();
 
     }
 

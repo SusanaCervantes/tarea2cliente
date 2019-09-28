@@ -19,6 +19,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import task2.model.Administradordto;
+import task2.service.AdministradorService;
 import task2.util.Formato;
 
 /**
@@ -27,8 +28,6 @@ import task2.util.Formato;
  */
 public class BuscarLiderController extends Controller implements Initializable{
 
-    @FXML
-    private JFXTextField tf_cedula;
     @FXML
     private JFXTextField tf_nombre;
     @FXML
@@ -40,16 +39,17 @@ public class BuscarLiderController extends Controller implements Initializable{
     @FXML
     private JFXButton btn_aceptar;
     @FXML
-    private TableView<?> tv_lideres;
+    private TableView<Administradordto> tv_lideres;
     @FXML
-    private TableColumn<?, ?> col_Cedula;
+    private TableColumn<Administradordto, String> col_Cedula;
     @FXML
-    private TableColumn<?, ?> col_Nombre;
+    private TableColumn<Administradordto, String> col_Nombre;
     @FXML
-    private TableColumn<?, ?> col_Apellidos;
+    private TableColumn<Administradordto, String> col_Apellidos;
     ObservableList<Administradordto> lideres;
     Administradordto seleccionado;
-    String ced, nom, ape;
+    String nom, ape;
+    AdministradorService aservice;
      /**
      * Se inicializa las columnas del tableView
      */
@@ -71,7 +71,6 @@ public class BuscarLiderController extends Controller implements Initializable{
      * Se le da un formato a los text field
      */
     public void Formato(){
-        tf_cedula.setTextFormatter(Formato.getInstance().cedulaFormat(30));
         tf_nombre.setTextFormatter(Formato.getInstance().maxLengthFormat(30));
         tf_apellido.setTextFormatter(Formato.getInstance().maxLengthFormat(30));
     }
@@ -82,7 +81,6 @@ public class BuscarLiderController extends Controller implements Initializable{
     public void Limpiar(){
         lideres.clear();
         seleccionado = new Administradordto();
-        tf_cedula.clear();
         tf_nombre.clear();
         tf_apellido.clear();
     }
@@ -91,17 +89,15 @@ public class BuscarLiderController extends Controller implements Initializable{
      * Verifica que campos estan vacios para hacer la busqueda
      */
     public void verificar(){
-        ced = "%";
         nom = "%";
         ape = "%";
-        if(tf_cedula.getText() != null || !tf_cedula.getText().isEmpty()){
-            ced = tf_cedula.getText();
-        }
         if(tf_nombre.getText() != null || !tf_nombre.getText().isEmpty()){
             nom = tf_nombre.getText();
+            nom = nom.toUpperCase();
         }
         if(tf_apellido.getText() != null || !tf_apellido.getText().isEmpty()){
             ape = tf_apellido.getText();
+            ape = ape.toUpperCase();
         }
     }
     
@@ -112,23 +108,41 @@ public class BuscarLiderController extends Controller implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        
+        aservice = new AdministradorService();
     }
 
     @FXML
     private void accionBuscar(ActionEvent event) {
+        verificar();
+        aservice.getAdministradores(nom, ape);
+        
     }
 
     @FXML
     private void accionLimpiar(ActionEvent event) {
+        Limpiar();
     }
 
     @FXML
     private void accionAceptar(ActionEvent event) {
+            this.getStage().close();
     }
 
     @FXML
     private void accionTabla(MouseEvent event) {
+        if(event.getClickCount() == 2 && tv_lideres.getSelectionModel().getSelectedItem() != null){
+            seleccionado = tv_lideres.getSelectionModel().getSelectedItem();
+        }
     }
+
+    public Administradordto getSeleccionado() {
+        return seleccionado;
+    }
+
+    public void setSeleccionado() {
+        this.seleccionado = null;
+    }
+    
+    
     
 }

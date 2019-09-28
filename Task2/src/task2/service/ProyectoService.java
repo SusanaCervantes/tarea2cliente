@@ -5,11 +5,13 @@
  */
 package task2.service;
 
+import controller.AdministradorDto;
 import controller.ProyectosController;
 import controller.ProyectosController_Service;
 import controller.ProyectosDto;
 import java.util.ArrayList;
 import java.util.List;
+import task2.model.Administradordto;
 import task2.model.Proyectodto;
 
 
@@ -24,16 +26,41 @@ public class ProyectoService {
     
     
     public List<Proyectodto> getTodos(){
-        ProyectosDto proDto = new ProyectosDto();
         List<ProyectosDto> list1 = pcontroller.getProyectos();
-        List<Proyectodto> list2 = new ArrayList();
-        for(ProyectosDto pro : list1){
-            //list2.add(Proyectodto.DtoTodto(pro));
+        if(list1 != null){
+            List<Proyectodto> list2 = new ArrayList();
+            Proyectodto proy;
+            for(ProyectosDto pro : list1){
+                proy = new Proyectodto(pro);
+                list2.add(proy);
+            }
+            return list2;
+        }else{
+            return null;
         }
-        return list2;
     }
     
-    public void Guardar(Proyectodto pro){
-        
+    public Proyectodto Guardar(Proyectodto pro){
+        ProyectosDto proy = pro.DtoTodto();
+        pro = new Proyectodto(pcontroller.guardarProyectos(proy));
+        return pro;
+    }
+    
+    public Integer Eliminar(Long id){
+       return pcontroller.eliminarProyecto(id); 
+    }
+    
+    public List<Proyectodto> filtrar(Administradordto adm, String nom){
+        List<Proyectodto> lista = new ArrayList();
+        AdministradorDto admDto = new AdministradorDto();
+        List<ProyectosDto> list = pcontroller.filter(adm.AdministradordtoToDto(admDto), nom);
+        if(list != null){
+            for(ProyectosDto pro: list){
+                lista.add(new Proyectodto(pro));
+            }
+            return lista;
+        }else{
+            return null;
+        }
     }
 }

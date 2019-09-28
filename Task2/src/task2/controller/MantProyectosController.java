@@ -10,10 +10,13 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
+import controller.AdministradorDto;
 import controller.ProyectosController_Service;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,6 +26,8 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import task2.model.Administradordto;
 import task2.model.Proyectodto;
+import task2.service.AdministradorService;
+import task2.service.ProyectoService;
 import task2.util.FlowController;
 import task2.util.Formato;
 import task2.util.Mensaje;
@@ -58,7 +63,11 @@ public class MantProyectosController extends Controller implements Initializable
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-d");
     Proyectodto proyecto;
     Mensaje men;
-    
+    ProyectoService pservice;
+    AdministradorService aservice;
+    ObservableList<Administradordto> lista;
+    @FXML
+    private JFXButton btn_agregar;
     /**
      * Initializes the controller class.
      */
@@ -76,7 +85,6 @@ public class MantProyectosController extends Controller implements Initializable
         rb_suspendido.setUserData("S");
         rb_finalizado.setUserData("F");
         rb_encurso.setUserData("C");
-        cb_Lider.setMouseTransparent(true);
     }
     
     /**
@@ -84,6 +92,9 @@ public class MantProyectosController extends Controller implements Initializable
      */
     public void initVariables(){
         men = new Mensaje();
+        pservice = new ProyectoService();
+        aservice = new AdministradorService();
+        
     }
     
     /**
@@ -155,6 +166,16 @@ public class MantProyectosController extends Controller implements Initializable
         }catch(Exception ex){}
     }
     
+    /**
+     * llena la lista de lideres 
+     */
+    public void llenarLideres(){
+       lista.clear();
+       lista = FXCollections.observableArrayList(aservice.getAdministradores("%", "%")); 
+       cb_Lider.setItems(lista);
+    }
+    
+    
     @FXML
     private void accionAtras(ActionEvent event) {
         this.getStage().close();
@@ -169,8 +190,14 @@ public class MantProyectosController extends Controller implements Initializable
 
     @FXML
     private void accionEliminar(ActionEvent event) {
-        if(proyecto != null){
-            
+        if(proyecto != null && proyecto.getProId() != null && Long.valueOf(proyecto.getProId()) != 0){
+            int v = pservice.Eliminar(Long.valueOf(proyecto.getProId()));
+            switch(v){
+                case 0: men.show(Alert.AlertType.ERROR, "ELIMINAR PROYECTOS", "No se encontro el proyecto con esos datos"); break;
+                case 1: men.show(Alert.AlertType.INFORMATION, "ELIMINAR PROYECTOS", "Eliminado exitosamente"); break;
+                case 2: men.show(Alert.AlertType.ERROR, "ELIMINAR PROYECTOS", "No puede ser eliminado, posee relacion con otros datos"); break;
+                case 3: men.show(Alert.AlertType.ERROR, "ELIMINAR PROYECTOS", "Ocurrio un error al eliminar el proyecto"); break;
+            }
         }else{
             men.showModal(Alert.AlertType.WARNING, "ADVERTENCIA", this.getStage(), "No existe proyecto que eliminar");
         }
@@ -179,7 +206,7 @@ public class MantProyectosController extends Controller implements Initializable
     @FXML
     private void accionGuardarProyecto(ActionEvent event) {
         if(proyecto != null && validarRequeridos()){
-            
+               pservice.Guardar(proyecto);
         }else{
             men.showModal(Alert.AlertType.WARNING, "ADVERTENCIA", this.getStage(), "No existe proyecto que guardar");
         }
@@ -187,15 +214,29 @@ public class MantProyectosController extends Controller implements Initializable
 
     @FXML
     private void accionBuscarP(ActionEvent event) {
+        BuscarProyectoController bpc = (BuscarProyectoController)FlowController.getInstance().getController("BuscarProyecto");
+        bpc.LlenarLideres();
         FlowController.getInstance().goViewInWindow("BuscarProyecto", Boolean.FALSE, Boolean.FALSE);
+        proyecto = bpc.getProyecto();
+        bpc.setProyecto();
+        
     }
 
     @FXML
     private void accionBuscarLider(ActionEvent event) {
+        BuscarLiderController bpc = (BuscarLiderController)FlowController.getInstance().getController("BuscarLider");
         FlowController.getInstance().goViewInWindow("BuscarLider", Boolean.FALSE, Boolean.FALSE);
+        cb_Lider.setValue(lista.get(lista.indexOf(bpc.getSeleccionado())));
+        bpc.setSeleccionado();
     }
 
     @Override
     public void initialize() {}
+
+    @FXML
+    private void accionAgregarL(ActionEvent event) {
+        FlowController.getInstance().goViewInWindow("MantAdministradores", Boolean.FALSE, Boolean.FALSE);
+        llenarLideres();
+    }
     
 }
