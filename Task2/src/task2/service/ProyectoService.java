@@ -11,6 +11,7 @@ import controller.ProyectosController_Service;
 import controller.ProyectosDto;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import task2.model.Administradordto;
 import task2.model.Proyectodto;
 
@@ -62,5 +63,12 @@ public class ProyectoService {
         }else{
             return null;
         }
+    }
+    
+    public List<Proyectodto> getActivos(){
+        List<Proyectodto> list1 = new ArrayList<>();
+        list1 = getTodos(); 
+        list1 = list1.stream().filter(x->x.getProEstado().equals("C")).collect(Collectors.toList());
+        return list1;
     }
 }

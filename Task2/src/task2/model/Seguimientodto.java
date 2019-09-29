@@ -4,20 +4,19 @@
  * and open the template in the editor.
  */
 package task2.model;
-/*
+
 import controller.SeguimientoDto;
 import javafx.beans.property.SimpleStringProperty;
-*/
+
 
 /**
  *
  * @author IVAN
  */
 
-/*
+
 public class Seguimientodto {
 
-    /*
     public Long id;
     public SimpleStringProperty detalle;
     public SimpleStringProperty fecha;
@@ -99,4 +98,3 @@ public class Seguimientodto {
     }
 
 }
-*/

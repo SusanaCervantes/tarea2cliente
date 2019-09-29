@@ -58,20 +58,6 @@ public class MantAdministradoresController extends Controller implements Initial
     @FXML
     private JFXButton btnLimpiar;
     @FXML
-    private TableView<Administradordto> tblAdministradores;
-    @FXML
-    private TableColumn<Administradordto, String> tcCedula;
-    @FXML
-    private TableColumn<Administradordto, String> tcNombre;
-    @FXML
-    private TableColumn<Administradordto, String> tcApellidos;
-    @FXML
-    private JFXTextField tfBuscarNombre;
-    @FXML
-    private JFXTextField tfBuscarApellidos;
-    @FXML
-    private JFXButton btnBuscar;
-    @FXML
     private JFXButton btnAtras;
     
     AdministradorService admS;
@@ -85,10 +71,6 @@ public class MantAdministradoresController extends Controller implements Initial
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         admS = new AdministradorService();
-        
-        tcCedula.setCellValueFactory(x -> x.getValue().cedula);
-        tcNombre.setCellValueFactory(x -> x.getValue().nombre);
-        tcApellidos.setCellValueFactory(x-> x.getValue().apellidos);
         
         admin = FXCollections.observableArrayList();
         adm = new Administradordto();
@@ -124,7 +106,10 @@ public class MantAdministradoresController extends Controller implements Initial
             adm.setCorreo(tfCorreo.getText());
             adm.setUsuario(tfUsuario.getText());
             adm.setContrasena(pfContrasena.getText());
-            adm.setEstado("I");
+            if(cbEstado.isSelected()){
+                adm.setEstado("A");
+            }else
+                adm.setEstado("I");
             adm = admS.guardarAdministrador(adm);
             if(adm == null){
                 new Mensaje().show(Alert.AlertType.WARNING, "", "Ocurrio un error al guardar el administrador");
@@ -149,30 +134,6 @@ public class MantAdministradoresController extends Controller implements Initial
         limpiar();
     }
 
-    @FXML
-    private void evtTblAdministradores(MouseEvent event) {
-        if(tblAdministradores.getSelectionModel().getSelectedItem() != null){
-            adm = tblAdministradores.getSelectionModel().getSelectedItem();
-            bind();
-        }
-    }
-
-    @FXML
-    private void evtBtnBuscar(ActionEvent event) {
-        String nom = "%";
-        String ap = "%"; 
-        if(!tfBuscarNombre.getText().isEmpty()){
-            nom = tfBuscarNombre.getText();
-        }
-        if(!tfBuscarApellidos.getText().isEmpty()){
-            ap = tfBuscarApellidos.getText();
-        }
-        admin = (FXCollections.observableArrayList((List<Administradordto>)admS.getAdministradores(nom, ap)));
-        if(!admin.isEmpty())
-            tblAdministradores.setItems(admin);
-        else 
-            new Mensaje().show(Alert.AlertType.INFORMATION, "", "No hay coincidencias de la busqueda");
-    }
 
     @FXML
     private void evtBtnAtras(ActionEvent event) {
@@ -218,7 +179,10 @@ public class MantAdministradoresController extends Controller implements Initial
         tfNombre.textProperty().bindBidirectional(adm.nombre);
         tfUsuario.textProperty().bindBidirectional(adm.usuario);
         pfContrasena.textProperty().bindBidirectional(adm.contrasena);
-        //cbEstado.setSelected(false);
+        if(adm.getEstado().equals("A")){
+            cbEstado.setSelected(true);
+        }else
+            cbEstado.setSelected(false);
     }
     
     private void unBind() {
@@ -228,13 +192,11 @@ public class MantAdministradoresController extends Controller implements Initial
         tfNombre.textProperty().unbindBidirectional(adm.nombre);
         tfUsuario.textProperty().unbindBidirectional(adm.usuario);
         pfContrasena.textProperty().unbindBidirectional(adm.contrasena);
-        //cbEstado.setSelected(false);
+        cbEstado.setSelected(false);
     }
     
     public void limpiar(){
         tfApellidos.clear();
-        tfBuscarApellidos.clear();
-        tfBuscarNombre.clear();
         tfCedula.clear();
         tfCorreo.clear();
         tfNombre.clear();
@@ -242,7 +204,6 @@ public class MantAdministradoresController extends Controller implements Initial
         cbEstado.setSelected(false);
         pfContrasena.clear();
         admin.clear();
-        tblAdministradores.getItems().clear();
     }
     
 }
