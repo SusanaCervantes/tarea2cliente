@@ -52,5 +52,10 @@ public class MenuController extends Controller implements Initializable {
     public void initialize() {
         
     }
+
+    @FXML
+    private void evtBtnResumen(ActionEvent event) {
+        FlowController.getInstance().goView("ResumenSeguimientos");
+    }
     
 }

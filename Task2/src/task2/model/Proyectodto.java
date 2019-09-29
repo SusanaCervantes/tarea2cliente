@@ -46,6 +46,7 @@ public class Proyectodto {
     }
     
     public Proyectodto(ProyectosDto pro){
+        this();
         this.proId.set(pro.getProId().toString());
         this.proPatrocinador.set(pro.getProPatrocinador());
         this.proLtecnico.set(pro.getProLtecnico());

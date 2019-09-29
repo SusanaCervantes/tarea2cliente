@@ -4,20 +4,20 @@
  * and open the template in the editor.
  */
 package task2.service;
-/*
+
 import controller.SeguimientoController;
 import controller.SeguimientoController_Service;
 import controller.SeguimientoDto;
 import java.util.ArrayList;
 import java.util.List;
 import task2.model.Seguimientodto;
-*/
+
 
 /**
  *
  * @author Susana
  */
-/*
+
 public class SeguimientoService {
     SeguimientoController_Service segC = new SeguimientoController_Service();
     SeguimientoController port = segC.getSeguimientoControllerPort();
@@ -45,4 +45,3 @@ public class SeguimientoService {
         return port.eliminarSeguimiento(segId);
     }
 }
-*/
