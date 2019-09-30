@@ -19,13 +19,14 @@
                      <children>
                         <JFXButton onAction="#evtBtnAdministradores" prefHeight="140.0" prefWidth="140.0" text="Administradores" />
                         <JFXButton onAction="#evtBtnProyectos" prefHeight="140.0" prefWidth="140.0" text="Proyectos" />
+                        <JFXButton onAction="#evtBtnActividad" prefHeight="140.0" prefWidth="140.0" text="Actividad" />
                      </children>
                   </HBox>
                   <HBox prefHeight="172.0" prefWidth="379.0" spacing="60.0">
                      <children>
-                        <JFXButton onAction="#evtBtnActividad" prefHeight="140.0" prefWidth="140.0" text="Actividad" />
                         <JFXButton onAction="#evtBtnSeguimiento" prefHeight="140.0" prefWidth="140.0" text="Seguimiento" />
                         <JFXButton onAction="#evtBtnResumen" prefHeight="140.0" prefWidth="140.0" text="Resumen" />
+                        <JFXButton onAction="#evtBtnCerrarSesion" prefHeight="140.0" prefWidth="140.0" text="Cerrar sesión" />
                      </children>
                   </HBox>
                </children>

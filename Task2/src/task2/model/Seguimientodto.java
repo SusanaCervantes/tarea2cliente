@@ -8,6 +8,7 @@ package task2.model;
 //import controller.SeguimientoDto;
 import controller.SeguimientoDto;
 import javafx.beans.property.SimpleStringProperty;
+import controller.SeguimientoDto;
 
 
 /**
