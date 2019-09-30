@@ -158,7 +158,7 @@ public class Administradordto {
 
     @Override
     public String toString() {
-        return nombre.get();
+        return nombre.get() + "  " + id;
     }
     
     

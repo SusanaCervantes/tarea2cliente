@@ -83,6 +83,7 @@ public class LogingController extends Controller implements Initializable {
             if(acceder != null){
                 admiLog = acceder;
                 AppContext.getInstance().set("usuarioActual", admiLog);
+                AppContext.getInstance().set("Usuario", admiLog);
                 getStage().close();
                 FlowController.getInstance().goMain();
                 FlowController.getInstance().goView("Menu");

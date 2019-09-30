@@ -50,6 +50,10 @@ public class AdministradorService {
             return null;
         }
         
+        if(adms == null || adms.size()==0){
+            return null;
+        }
+        
         for(AdministradorDto a: adms){
             adms2.add(new Administradordto(a));
         }

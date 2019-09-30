@@ -145,13 +145,13 @@ ON UNA.Adm_Proyecto FOR EACH ROW
 BEGIN
   :new.pro_id := UNA.Adm_Proyecto_seq01.nextval;
 END;
-;
+/
 CREATE OR REPLACE TRIGGER UNA.tsu_Adm_Proyecto_Adm_Proyect_0 AFTER UPDATE OF pro_id
 ON UNA.Adm_Proyecto FOR EACH ROW
 BEGIN
   RAISE_APPLICATION_ERROR(-20010,'Cannot update column pro_id in table UNA.Adm_Proyecto as it uses sequence.');
 END;
-;
+/
 
 -- Trigger for sequence UNA.Adm_Administrador_seq01 for column adm_id in table UNA.Adm_Administrador ---------
 CREATE OR REPLACE TRIGGER UNA.ts_Adm_Administrador_Adm_Adm_0 BEFORE INSERT

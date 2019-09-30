@@ -5,11 +5,11 @@
  */
 package task2.service;
 
+import controller.ActividadController;
+import controller.ActividadController_Service;
 import controller.ActividadDto;
 import java.util.ArrayList;
 import java.util.List;
-import task2.controller.ActividadController;
-import task2.controller.ActividadController_Service;
 import task2.model.Actividaddto;
 
 /**
@@ -22,6 +22,7 @@ public class ActividadService {
     ActividadController port = actC.getActividadControllerPort();
     
      public Actividaddto guardarActividad(Actividaddto act){
+         System.out.println("ID P: "+act.getPro().getProId());
         ActividadDto actDto = new ActividadDto();
         actDto = act.ActividadToDto(actDto);
         //actDto = port.guardarActividad(actDto);

@@ -42,8 +42,11 @@ public class ProyectoService {
     }
     
     public Proyectodto Guardar(Proyectodto pro){
+        pro.toString();
         ProyectosDto proy = pro.DtoTodto();
+        System.out.println("L1"); 
         pro = new Proyectodto(pcontroller.guardarProyectos(proy));
+        System.out.println("l2");
         return pro;
     }
     
@@ -55,6 +58,28 @@ public class ProyectoService {
         List<Proyectodto> lista = new ArrayList();
         AdministradorDto admDto = new AdministradorDto();
         List<ProyectosDto> list = pcontroller.filter(adm.AdministradordtoToDto(admDto), nom);
+        if(list != null){
+            for(ProyectosDto pro: list){
+                lista.add(new Proyectodto(pro));
+            }
+            return lista;
+        }else{
+            return null;
+        }
+    }
+    
+    /**
+     * 
+     * @param no nombre
+     * @param lt lider tecnico
+     * @param p patrocinador
+     * @return 
+     */
+    public List<Proyectodto> filtrar2(String no, String lt, String p){
+        System.out.println(no+" "+lt+" "+p+"\n");
+        List<Proyectodto> lista = new ArrayList();
+        AdministradorDto admDto = new AdministradorDto();
+        List<ProyectosDto> list = pcontroller.filter2(no, lt, no);
         if(list != null){
             for(ProyectosDto pro: list){
                 lista.add(new Proyectodto(pro));

@@ -19,7 +19,7 @@ public class Task2 extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FlowController.getInstance().InitializeFlow(stage);
-        FlowController.getInstance().goViewInWindowModal("Loging", Boolean.TRUE, StageStyle.UTILITY);
+        FlowController.getInstance().goViewInWindowModal("Loging", Boolean.TRUE, StageStyle.DECORATED);
     }
 
     /**
