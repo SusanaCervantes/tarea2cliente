@@ -98,7 +98,7 @@ public class ResumenSeguimientosController extends Controller implements Initial
             AppContext.getInstance().set("resSeguimiento", seg);
             FlowController.getInstance().goView("SeguimientoProyectos");
         }else{
-            new Mensaje().show(Alert.AlertType.NONE, "", "Primero debe seleccionar un elemento de la tabla");
+            new Mensaje().show(Alert.AlertType.INFORMATION, "", "Primero debe seleccionar un elemento de la tabla");
         }
     }
     

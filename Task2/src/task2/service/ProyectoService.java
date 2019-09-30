@@ -5,8 +5,12 @@
  */
 package task2.service;
 
-import task2.service.AdministradorDto;
 
+
+import controller.AdministradorDto;
+import controller.ProyectosController;
+import controller.ProyectosController_Service;
+import controller.ProyectosDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,7 +44,6 @@ public class ProyectoService {
     }
     
     public Proyectodto Guardar(Proyectodto pro){
-        pro.toString();
         ProyectosDto proy = pro.DtoTodto();
         System.out.println("L1"); 
         pro = new Proyectodto(pcontroller.guardarProyectos(proy));

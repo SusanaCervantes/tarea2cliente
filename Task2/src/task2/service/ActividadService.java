@@ -22,10 +22,9 @@ public class ActividadService {
     ActividadController port = actC.getActividadControllerPort();
     
      public Actividaddto guardarActividad(Actividaddto act){
-         System.out.println("ID P: "+act.getPro().getProId());
         ActividadDto actDto = new ActividadDto();
         actDto = act.ActividadToDto(actDto);
-        //actDto = port.guardarActividad(actDto);
+        actDto = port.guardarActividad(actDto);
         
         act = new Actividaddto(actDto);
         return act;
@@ -34,7 +33,7 @@ public class ActividadService {
      public List<Actividaddto> getActividades(Long proId){
         List<ActividadDto> actsDto = new ArrayList<>(); 
         List<Actividaddto> acts = new ArrayList<>(); 
-       // actsDto = port.getActividades(proId);
+        actsDto = port.getActividades(proId);
         for(ActividadDto a: actsDto){
             acts.add(new Actividaddto(a));
         }

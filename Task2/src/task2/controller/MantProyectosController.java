@@ -6,7 +6,6 @@
 package task2.controller;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
@@ -14,7 +13,6 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -138,8 +136,11 @@ public class MantProyectosController extends Controller implements Initializable
     /**
      * Limpiar los nodos
      */
+    
     public void Limpiar(){
         try{
+            tf_celt.clear();
+            tf_cep.clear();
             tf_LiderTecnico.clear();
             tf_Patrocinador.clear();
             tf_nombreProyecto.clear();
@@ -175,6 +176,9 @@ public class MantProyectosController extends Controller implements Initializable
                 case 2: men.show(Alert.AlertType.ERROR, "ELIMINAR PROYECTOS", "No puede ser eliminado, posee relacion con otros datos"); break;
                 case 3: men.show(Alert.AlertType.ERROR, "ELIMINAR PROYECTOS", "Ocurrio un error al eliminar el proyecto"); break;
             }
+            if(v == 1){
+                Limpiar();
+            }
         }else{
             men.showModal(Alert.AlertType.WARNING, "ADVERTENCIA", this.getStage(), "No existe proyecto que eliminar");
         }
@@ -201,15 +205,18 @@ public class MantProyectosController extends Controller implements Initializable
                 val = dp_fechaRealFinal.getValue().toString();
             }
             proyecto.setProFrFinal(val);
-            //proyecto.setAdmId((Administradordto)AppContext.getInstance().get("Usuario"));
+            proyecto.setAdmId((Administradordto)AppContext.getInstance().get("Usuario"));
             proyecto.setProVersion(Long.valueOf(1));
             if(proyecto != null){
-                men.show(Alert.AlertType.INFORMATION, "INFORMATION", proyecto.toString());
                 Administradordto adm = new Administradordto();
                 adm = (Administradordto) AppContext.getInstance().get("Usuario");
                 proyecto.setAdmId(adm);
-                System.out.println(adm.getId());
-                pservice.Guardar(proyecto);
+                proyecto = pservice.Guardar(proyecto);
+                if(proyecto != null){
+                    men.show(Alert.AlertType.INFORMATION, "INFORMATION", "Proyecto guardado");
+                }else{
+                    men.show(Alert.AlertType.WARNING, "WARNING", "Error al guardar el proyecto");
+                }
             }
         }else{
             men.show(Alert.AlertType.WARNING, "WARNING", "No existe proyecto que guardar");
@@ -241,11 +248,17 @@ public class MantProyectosController extends Controller implements Initializable
             if(!proyecto.getProFrFinal().equals("NR")){
                 dp_fechaRealFinal.setValue(LocalDate.parse(proyecto.getProFrFinal()));
             }
+            EstablecerEstado(proyecto.getProEstado());
         }
     }
     
-    public void EstablecerEstado(){
-        
+    public void EstablecerEstado(String est){
+        switch(est){
+            case "P": rb_activo.setSelected(true); break;
+            case "F": rb_finalizado.setSelected(true); break;
+            case "S": rb_suspendido.setSelected(true); break;
+            case "C": rb_encurso.setSelected(true); break;
+        }
     }
     
     @Override

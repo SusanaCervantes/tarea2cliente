@@ -94,7 +94,7 @@ public class Actividaddto {
         act.setFrinicio(this.getFrinicio().get());
         act.setOrden(this.getOrden());
         act.setVersion(this.getVersion());
-        
+        act.setPro(this.getPro().DtoTodto());
         return act;
     }
     

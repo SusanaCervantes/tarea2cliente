@@ -9,6 +9,7 @@ package task2.controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import com.sun.deploy.appcontext.AppContext;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -16,6 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -26,6 +28,7 @@ import task2.model.Proyectodto;
 import task2.service.AdministradorService;
 import task2.service.ProyectoService;
 import task2.util.FlowController;
+import task2.util.Mensaje;
 
 /**
  * FXML Controller class
@@ -49,7 +52,7 @@ public class BuscarProyectoController extends Controller implements Initializabl
     @FXML
     private TableColumn<Proyectodto, String> col_Nombre;
     ObservableList<Proyectodto> lista;
-    ObservableList<Administradordto> lista1;
+    ObservableList<Proyectodto> lista1;
     Proyectodto proy;
     ProyectoService pservice;
     AdministradorService aservice;
@@ -105,7 +108,18 @@ public class BuscarProyectoController extends Controller implements Initializabl
                 pat = tf_patrocinador.getText();
             }
             lista = FXCollections.observableArrayList(pservice.filtrar2(nom, lidt, pat));
-            tv_proyectos.setItems(lista);
+            Administradordto adm = (Administradordto) task2.util.AppContext.getInstance().get("Usuario");
+            for(int i = 0; i < lista.size(); i++){
+                if(lista.get(i).getAdmId().getCedula().equals(adm.getCedula())){
+                    lista1.add(lista.get(i));
+                }
+            }
+            if(!lista1.isEmpty()){
+                tv_proyectos.setItems(lista1);
+            }else{
+                Mensaje men = new Mensaje();
+                men.show(Alert.AlertType.INFORMATION, "INFORMATION", "SIN RESULTADOS");
+            }
         }catch(Exception ex){
             System.out.println(ex);
         }
@@ -143,6 +157,7 @@ public class BuscarProyectoController extends Controller implements Initializabl
             tf_nombre.clear();
             tf_patrocinador.clear();
             lista.clear();
+            lista1.clear();
         }catch(Exception ex){}
     }
 
