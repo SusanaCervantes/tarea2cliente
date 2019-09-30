@@ -11,7 +11,7 @@
 
 <HBox alignment="CENTER" prefHeight="578.0" prefWidth="832.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="task2.controller.MantAdministradoresController">
    <children>
-      <AnchorPane id="AnchorPane" prefHeight="578.0" prefWidth="807.0" style="-fx-background-color: black;" styleClass="mainFxmlClass">
+      <AnchorPane id="AnchorPane" prefHeight="578.0" prefWidth="807.0" style="-fx-background-color: black;" styleClass="mainFxmlClass" stylesheets="@css/css2.css">
          <children>
             <VBox alignment="TOP_CENTER" layoutX="15.0" layoutY="166.0" prefHeight="302.0" prefWidth="777.0" spacing="70.0">
                <children>

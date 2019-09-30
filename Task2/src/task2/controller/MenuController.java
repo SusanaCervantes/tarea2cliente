@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.stage.StageStyle;
 import task2.util.FlowController;
 
 /**
@@ -57,6 +58,12 @@ public class MenuController extends Controller implements Initializable {
     @FXML
     private void evtBtnResumen(ActionEvent event) {
         FlowController.getInstance().goView("ResumenSeguimientos");
+    }
+
+    @FXML
+    private void evtBtnCerrarSesion(ActionEvent event) {
+        FlowController.getInstance().getMainStage().close();
+        FlowController.getInstance().goViewInWindowModal("Loging", Boolean.FALSE, StageStyle.UTILITY);
     }
     
 }

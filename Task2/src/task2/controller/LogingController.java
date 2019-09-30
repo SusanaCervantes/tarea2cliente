@@ -1,9 +1,5 @@
-﻿/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package task2.controller;
+
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -17,8 +13,10 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.StageStyle;
 import task2.model.Administradordto;
 import task2.service.AdministradorService;
+import task2.util.AppContext;
 import task2.util.FlowController;
 import task2.util.Formato;
 import task2.util.Mensaje;
@@ -49,12 +47,12 @@ public class LogingController extends Controller implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        txtUsuario.setTextFormatter(Formato.getInstance().letrasFormat(30));
-        txtContrasena.setTextFormatter(Formato.getInstance().letrasFormat(30));
+        //txtUsuario.setTextFormatter(Formato.getInstance().letrasFormat(30));
+        //txtContrasena.setTextFormatter(Formato.getInstance().letrasFormat(30));
         txtUsuario.setText("");
         txtContrasena.setText("");
         AsignarImagenes();
-        
+        admS = new AdministradorService();
     }    
 
     void AsignarImagenes(){
@@ -69,9 +67,11 @@ public class LogingController extends Controller implements Initializable {
 
     @FXML
     private void accionRegistrarse(ActionEvent event) {
+        AppContext.getInstance().set("registrar", true);
+        FlowController.getInstance().goViewInWindowModal("MantAdministradores", Boolean.FALSE, StageStyle.UTILITY);
+        AppContext.getInstance().set("registrar", null);
     }
 
-    AdministradorService admS = new AdministradorService();
     
     @FXML
     private void accion_Acceder(ActionEvent event) {
@@ -79,10 +79,10 @@ public class LogingController extends Controller implements Initializable {
         if(!ban){
             new Mensaje().show(Alert.AlertType.WARNING, "", "Campos Vacios");
         }else{
-            
             Administradordto acceder = admS.log(txtUsuario.getText(), txtContrasena.getText());
             if(acceder != null){
                 admiLog = acceder;
+                AppContext.getInstance().set("usuarioActual", admiLog);
                 getStage().close();
                 FlowController.getInstance().goMain();
                 FlowController.getInstance().goView("Menu");

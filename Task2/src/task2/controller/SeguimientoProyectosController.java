@@ -12,7 +12,10 @@ import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,11 +27,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.util.StringConverter;
+import task2.model.Administradordto;
 import task2.model.Proyectodto;
 import task2.model.Seguimientodto;
 import task2.service.ProyectoService;
 import task2.service.SeguimientoService;
 import task2.util.AppContext;
+import task2.util.Correo;
 import task2.util.FlowController;
 import task2.util.Formato;
 import task2.util.Mensaje;
@@ -65,6 +70,8 @@ public class SeguimientoProyectosController extends Controller implements Initia
     SeguimientoService ss;
     Proyectodto proyecto;
     ProyectoService ps;
+    Administradordto adm;
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -78,6 +85,8 @@ public class SeguimientoProyectosController extends Controller implements Initia
         proyectos = FXCollections.observableArrayList();
         ss = new SeguimientoService();
         ps = new ProyectoService();
+        adm = new Administradordto();
+        adm = (Administradordto) AppContext.getInstance().get("usuarioActual");
         
         cbProyecto.setConverter(new StringConverter<Proyectodto>() {
             @Override
@@ -104,8 +113,9 @@ public class SeguimientoProyectosController extends Controller implements Initia
         cbProyecto.getItems().clear();
         limpiar();
         
-        //proyectos 
-        proyectos.addAll(ps.getTodos()); //= (FXCollections.observableArrayList(ps.getTodos()));
+        //proyectos
+        
+        proyectos.addAll(ps.getTodos().stream().filter(x->x.getAdmId().getCedula().equalsIgnoreCase(adm.getCedula())).collect(Collectors.toList())); //= (FXCollections.observableArrayList(ps.getTodos()));
         cbProyecto.getItems().addAll(proyectos);
         
         if(AppContext.getInstance().get("resSeguimiento") != null){
@@ -135,6 +145,7 @@ public class SeguimientoProyectosController extends Controller implements Initia
                 seg.setPorcentaje(tfPorcentajeAvance.getText());
 
                 seg = ss.guardarSeguimiento(seg);
+                enviarCorreo();
                 if(seg == null){
                     new Mensaje().show(Alert.AlertType.INFORMATION, "Guardar seguimiento", "Ocurrio un error al guardar el seguimiento");
                 }
@@ -193,5 +204,10 @@ public class SeguimientoProyectosController extends Controller implements Initia
             seguimientos = (FXCollections.observableArrayList(ss.getSeguimientos(new Long(proyecto.proId.get()))));
             tblSeguimiento.setItems(seguimientos);
         }
+    }
+    
+    void enviarCorreo(){
+                            
+        //new Correo().EnviarTexto("susi0326@gmail.com", "admproyecto", " ");
     }
 }

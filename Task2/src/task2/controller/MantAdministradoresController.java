@@ -26,6 +26,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import task2.model.Administradordto;
 import task2.service.AdministradorService;
+import task2.util.AppContext;
 import task2.util.FlowController;
 import task2.util.Mensaje;
 
@@ -72,8 +73,8 @@ public class MantAdministradoresController extends Controller implements Initial
         admS = new AdministradorService();
         
         admin = FXCollections.observableArrayList();
-        adm = new Administradordto();
         
+        adm = new Administradordto();
         //nuevo();
         indicarRequeridos();
     }   
@@ -130,18 +131,32 @@ public class MantAdministradoresController extends Controller implements Initial
 
     @FXML
     private void evtBtnLimpiar(ActionEvent event) {
+        adm = new Administradordto();
         limpiar();
     }
 
 
     @FXML
     private void evtBtnAtras(ActionEvent event) {
-        FlowController.getInstance().goView("Menu");
+        if(AppContext.getInstance().get("registrar") != null){
+            getStage().close();
+            //FlowController.getInstance().goView("LogIn");
+        }else{
+            FlowController.getInstance().goView("Menu");
+        }
     }
 
     @Override
     public void initialize() {
-        
+        limpiar();
+        if(AppContext.getInstance().get("usuarioActual") != null){
+            if(AppContext.getInstance().get("registrar") != null){
+                limpiar();
+            }else{
+                adm = (Administradordto) AppContext.getInstance().get("usuarioActual");
+                bind();
+            }
+        }
     }
     
     public String validarRequeridos() {
