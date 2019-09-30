@@ -2,6 +2,9 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import java.net.URL?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -15,7 +18,7 @@
               <URL value="@/task2/views/css/css2.css" />
           </stylesheets>
          <children>
-            <TableView fx:id="tblSegPro" layoutX="26.0" layoutY="137.0" onMouseClicked="#evtTblSegPro" prefHeight="338.0" prefWidth="751.0">
+            <TableView fx:id="tblSegPro" layoutX="26.0" layoutY="312.0" onMouseClicked="#evtTblSegPro" prefHeight="182.0" prefWidth="751.0">
               <columns>
                 <TableColumn fx:id="tcProyecto" prefWidth="169.0" text="Proyecto" />
                 <TableColumn fx:id="tcSeg" prefWidth="317.0" text="Seguimiento" />
@@ -26,6 +29,14 @@
             <Label alignment="CENTER" layoutX="218.0" layoutY="14.0" prefHeight="32.0" prefWidth="382.0" text="Resumen de seguimientos" textAlignment="CENTER" />
             <JFXButton layoutX="641.0" layoutY="494.0" onAction="#evtIrSeg" prefHeight="48.0" prefWidth="145.0" text="Ir a seguimiento" />
             <JFXButton layoutX="722.0" layoutY="8.0" onAction="#evtAtras" prefHeight="58.0" prefWidth="64.0" text="Atrás" />
+            <LineChart fx:id="Grafico" layoutX="26.0" layoutY="54.0" prefHeight="216.0" prefWidth="751.0">
+              <xAxis>
+                <CategoryAxis fx:id="cAxis" side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis fx:id="nAxis" side="LEFT" />
+              </yAxis>
+            </LineChart>
          </children>
       </AnchorPane>
    </children>

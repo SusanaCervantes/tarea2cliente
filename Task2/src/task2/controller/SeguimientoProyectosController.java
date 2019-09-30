@@ -207,7 +207,15 @@ public class SeguimientoProyectosController extends Controller implements Initia
     }
     
     void enviarCorreo(){
-                            
-        //new Correo().EnviarTexto("susi0326@gmail.com", "admproyecto", " ");
+        //correos a enviar 
+        new Correo().EnviarTexto(proyecto.getProCorrepLtecnico(), proyecto.getProNombre(), "Seguimiento de proyecto agregado: "
+        + "Porcentaje de avance: " + seg.porcentaje + "Detalle: " + seg.getDetalle()
+        );
+        new Correo().EnviarTexto(proyecto.getProCorreoPatrocinador(), proyecto.getProNombre(), "Seguimiento de proyecto agregado: "
+        + "Porcentaje de avance: " + seg.porcentaje + "Detalle: " + seg.getDetalle()
+        );
+        new Correo().EnviarTexto(adm.getCorreo(), proyecto.getProNombre(), "Seguimiento de proyecto agregado: "
+        + "Porcentaje de avance: " + seg.porcentaje + "Detalle: " + seg.getDetalle()
+        );
     }
 }

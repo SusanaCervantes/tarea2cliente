@@ -16,6 +16,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -54,6 +58,12 @@ public class ResumenSeguimientosController extends Controller implements Initial
     private SeguimientoService ss;
     
     DateTimeFormatter formatter;
+    @FXML
+    private LineChart<String, Double> Grafico;
+    @FXML
+    private NumberAxis nAxis;
+    @FXML
+    private CategoryAxis cAxis;
 
     /**
      * Initializes the controller class.
@@ -65,7 +75,7 @@ public class ResumenSeguimientosController extends Controller implements Initial
         tcProyecto.setCellValueFactory(x-> x.getValue().getProyecto().proNombre);
         tcSeg.setCellValueFactory(x-> x.getValue().detalle);
         tcFecha.setCellValueFactory(x-> x.getValue().fecha);
-        tcPorcentaje.setCellValueFactory(x-> x.getValue().fecha);
+        tcPorcentaje.setCellValueFactory(x-> x.getValue().porcentaje);
         
         proyectos = new ArrayList<>();
         segs = FXCollections.observableArrayList();
@@ -122,7 +132,28 @@ public class ResumenSeguimientosController extends Controller implements Initial
                 }
             }
         }
+        
         tblSegPro.setItems(segs);
+        
+        
+        Grafico.getData().clear();
+
+        Grafico.setTitle("Proyectos Activos");
+
+        cAxis.setLabel("Nombre del Proyecto:");
+        nAxis.setLabel("Porcentaje(%):");
+
+        XYChart.Series<String, Double> series = new XYChart.Series<>();
+        series.setName("Porcentaje Realizado del Proyecto");
+
+        
+        
+        int con=0;
+        for (Seguimientodto seguimiento : segs) {
+            series.getData().add(new XYChart.Data<>(seguimiento.getProyecto().getProNombre(), Double.valueOf(seguimiento.getPorcentaje())));
+            con++;
+        }
+        Grafico.getData().add(series);
     }
 
     @FXML

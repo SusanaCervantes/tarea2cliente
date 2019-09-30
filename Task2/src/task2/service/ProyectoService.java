@@ -79,7 +79,7 @@ public class ProyectoService {
         System.out.println(no+" "+lt+" "+p+"\n");
         List<Proyectodto> lista = new ArrayList();
         AdministradorDto admDto = new AdministradorDto();
-        List<ProyectosDto> list = pcontroller.filter2(no, lt, no);
+        List<ProyectosDto> list = new ArrayList<>();//pcontroller.filter2(no, lt, no);
         if(list != null){
             for(ProyectosDto pro: list){
                 lista.add(new Proyectodto(pro));

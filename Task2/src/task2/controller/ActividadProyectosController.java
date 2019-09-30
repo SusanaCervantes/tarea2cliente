@@ -27,9 +27,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.util.StringConverter;
 import task2.model.Actividaddto;
+import task2.model.Administradordto;
 import task2.model.Proyectodto;
 import task2.service.ActividadService;
 import task2.service.ProyectoService;
+import task2.util.AppContext;
+import task2.util.Correo;
 import task2.util.FlowController;
 import task2.util.Formato;
 import task2.util.Mensaje;
@@ -72,6 +75,7 @@ public class ActividadProyectosController extends Controller implements Initiali
     
     ObservableList<Proyectodto> proyectos;
     Proyectodto proyecto;
+    Administradordto adm = new Administradordto();
     
     ObservableList<Actividaddto> actividades;
     Actividaddto act;
@@ -262,6 +266,23 @@ public class ActividadProyectosController extends Controller implements Initiali
         cbxProyecto.setItems(proyectos);
         proyecto = new Proyectodto();
         act = new Actividaddto();
+        adm = (Administradordto) AppContext.getInstance().get("Usuario");
+    }
+    
+    void enviarCorreo(){
+        //correos a enviar 
+        new Correo().EnviarTexto(proyecto.getProCorrepLtecnico(), proyecto.getProNombre(), "Actividad agregada al proyecto: " +
+        act.getNombre() + " Descripcion: " + act.getDescripcion() + " Encargado de la actividad: " + act.encargado +
+        " Estado: " + act.estado
+        );
+        new Correo().EnviarTexto(proyecto.getProCorreoPatrocinador(), proyecto.getProNombre(), "Actividad agregada al proyecto: " +
+        act.getNombre() + " Descripcion: " + act.getDescripcion() + " Encargado de la actividad: " + act.encargado +
+        " Estado: " + act.estado
+        );
+        new Correo().EnviarTexto(adm.getCorreo(), proyecto.getProNombre(), "Actividad agregada al proyecto: " +
+        act.getNombre() + " Descripcion: " + act.getDescripcion() + " Encargado de la actividad: " + act.encargado +
+        " Estado: " + act.estado
+        );
     }
     
 }
