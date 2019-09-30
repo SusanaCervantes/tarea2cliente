@@ -5,11 +5,13 @@
  */
 package task2.model;
 
-import controller.AdministradorDto;
-import controller.ProyectosDto;
+/*import AdministradorDto;
+import controller.ProyectosDto;*/
 import java.util.ArrayList;
 import java.util.List;
 import javafx.beans.property.SimpleStringProperty;
+import task2.service.AdministradorDto;
+import task2.service.ProyectosDto;
 
 /**
  *
