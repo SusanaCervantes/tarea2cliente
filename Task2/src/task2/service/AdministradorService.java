@@ -10,7 +10,12 @@ import controller.AdministradorController_Service;
 import controller.AdministradorDto;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.control.Alert;
+import task2.service.AdministradorController;
+import task2.service.AdministradorController_Service;
+import task2.service.AdministradorDto;
 import task2.model.Administradordto;
+import task2.util.Mensaje;
 
 /**
  *
@@ -39,8 +44,14 @@ public class AdministradorService {
     }
      
     public Administradordto log(String usuario, String contrasena){
+        
+        //System.out.println("entra a log");
         List<AdministradorDto> adms = port.getAdmiLogging(usuario, contrasena);
         List<Administradordto> adms2 = new ArrayList<>();
+         
+        if(adms == null || adms.size()==0){
+            return null;
+        }
         
         if(adms == null || adms.size()==0){
             return null;

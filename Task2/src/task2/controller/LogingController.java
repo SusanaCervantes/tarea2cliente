@@ -1,4 +1,4 @@
-/*
+﻿/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -21,6 +21,7 @@ import task2.model.Administradordto;
 import task2.service.AdministradorService;
 import task2.util.AppContext;
 import task2.util.FlowController;
+import task2.util.Formato;
 import task2.util.Mensaje;
 
 /**
@@ -49,6 +50,10 @@ public class LogingController extends Controller implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        txtUsuario.setTextFormatter(Formato.getInstance().letrasFormat(30));
+        txtContrasena.setTextFormatter(Formato.getInstance().letrasFormat(30));
+        txtUsuario.setText("");
+        txtContrasena.setText("");
         AsignarImagenes();
         
     }    
@@ -61,13 +66,13 @@ public class LogingController extends Controller implements Initializable {
     
     @Override
     public void initialize() {
-        admS = new AdministradorService();
     }
 
     @FXML
     private void accionRegistrarse(ActionEvent event) {
     }
 
+    AdministradorService admS = new AdministradorService();
     
     @FXML
     private void accion_Acceder(ActionEvent event) {
@@ -75,6 +80,7 @@ public class LogingController extends Controller implements Initializable {
         if(!ban){
             new Mensaje().show(Alert.AlertType.WARNING, "", "Campos Vacios");
         }else{
+            
             Administradordto acceder = admS.log(txtUsuario.getText(), txtContrasena.getText());
             if(acceder != null){
                 admiLog = acceder;
