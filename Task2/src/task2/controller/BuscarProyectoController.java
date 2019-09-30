@@ -37,10 +37,6 @@ public class BuscarProyectoController extends Controller implements Initializabl
     @FXML
     private BorderPane bp_bus_root;
     @FXML
-    private JFXComboBox<Administradordto> cb_lider;
-    @FXML
-    private JFXButton btn_buscarLider;
-    @FXML
     private JFXTextField tf_nombre;
     @FXML
     private JFXButton btn_buscar;
@@ -52,13 +48,19 @@ public class BuscarProyectoController extends Controller implements Initializabl
     private TableView<Proyectodto> tv_proyectos;
     @FXML
     private TableColumn<Proyectodto, String> col_Nombre;
-    @FXML
-    private TableColumn<Proyectodto, Administradordto> col_Lider;
     ObservableList<Proyectodto> lista;
     ObservableList<Administradordto> lista1;
     Proyectodto proy;
     ProyectoService pservice;
     AdministradorService aservice;
+    @FXML
+    private JFXTextField tf_liderTecnico;
+    @FXML
+    private JFXTextField tf_patrocinador;
+    @FXML
+    private TableColumn<Proyectodto, String> col_lider;
+    @FXML
+    private TableColumn<Proyectodto, String> col_Patrocinador;
     
     /**
      * Initializes the controller class.
@@ -69,11 +71,12 @@ public class BuscarProyectoController extends Controller implements Initializabl
         lista1 = FXCollections.observableArrayList();
         pservice = new ProyectoService();
         aservice = new AdministradorService();
+        initTabla();
     }    
 
     @Override
     public void initialize() {
-        initTabla();
+        Limpiar();
     }
 
     /**
@@ -81,24 +84,28 @@ public class BuscarProyectoController extends Controller implements Initializabl
      */
     public void initTabla(){
         col_Nombre.setCellValueFactory(new PropertyValueFactory("proNombre"));
-        col_Lider.setCellValueFactory(new PropertyValueFactory("admId"));
+        col_lider.setCellValueFactory(new PropertyValueFactory("proLtecnico"));
+        col_Patrocinador.setCellValueFactory(new PropertyValueFactory("proPatrocinador"));
     }
     
-    @FXML
-    private void accionBuscarLider(ActionEvent event) {
-        BuscarLiderController blc = (BuscarLiderController)FlowController.getInstance().getController("BuscarLider");
-        FlowController.getInstance().goViewInWindow("BuscarLider", Boolean.FALSE, Boolean.FALSE);
-        
-    }
 
     @FXML
     private void accionBuscar(ActionEvent event) {
-        try{
+       try{
             String nom = "%";
+            String lidt = "%";
+            String pat = "%";
             if(!tf_nombre.getText().isEmpty()){
                 nom = tf_nombre.getText();
             }
-            pservice.filtrar(cb_lider.getValue(), nom);
+            if(!tf_liderTecnico.getText().isEmpty()){
+                lidt = tf_liderTecnico.getText();
+            }
+            if(!tf_patrocinador.getText().isEmpty()){
+                pat = tf_patrocinador.getText();
+            }
+            lista = FXCollections.observableArrayList(pservice.filtrar2(nom, lidt, pat));
+            tv_proyectos.setItems(lista);
         }catch(Exception ex){
             System.out.println(ex);
         }
@@ -106,8 +113,7 @@ public class BuscarProyectoController extends Controller implements Initializabl
 
     @FXML
     private void accionLimpiar(ActionEvent event) {
-        lista.clear();
-        
+        Limpiar();
     }
 
     @FXML
@@ -123,18 +129,21 @@ public class BuscarProyectoController extends Controller implements Initializabl
         }
     }
     
-    public void LlenarLideres(){
-        lista1.clear();
-        lista1 = FXCollections.observableArrayList(aservice.getAdministradores("%", "%")); 
-        cb_lider.setItems(lista1);
-    }
-    
     public Proyectodto getProyecto(){
         return proy;
     }
     
     public void setProyecto(){
         proy = null;
+    }
+    
+    void Limpiar(){
+        try{
+            tf_liderTecnico.clear();
+            tf_nombre.clear();
+            tf_patrocinador.clear();
+            lista.clear();
+        }catch(Exception ex){}
     }
 
 }

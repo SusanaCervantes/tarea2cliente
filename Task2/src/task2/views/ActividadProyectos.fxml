@@ -12,23 +12,22 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
 <HBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="task2.controller.ActividadProyectosController">
    <children>
-      <AnchorPane id="AnchorPane" prefHeight="587.0" prefWidth="799.0">
+      <AnchorPane id="AnchorPane" prefHeight="587.0" prefWidth="935.0">
          <children>
-            <VBox alignment="CENTER" layoutX="34.0" layoutY="21.0" spacing="20.0">
+            <VBox alignment="CENTER" layoutX="34.0" layoutY="21.0" prefHeight="543.0" prefWidth="874.0" spacing="20.0">
                <children>
                   <HBox spacing="20.0">
                      <children>
-                        <Label prefHeight="35.0" prefWidth="635.0" text="Actividades de proyectos" />
+                        <Label prefHeight="35.0" prefWidth="709.0" text="Actividades de proyectos" />
                         <JFXButton fx:id="btnAtras" onAction="#actAtras" prefHeight="35.0" prefWidth="76.0" text="Atras" />
                      </children>
                   </HBox>
                   <HBox prefHeight="174.0" prefWidth="731.0" spacing="50.0" style="-fx-background-color: rgba(0, 0, 0, 0.2);">
                      <children>
-                        <JFXComboBox fx:id="cbxProyecto" onMouseClicked="#evtCbProyectos" prefHeight="35.0" prefWidth="151.0" promptText="Proyecto" />
-                        <VBox alignment="CENTER" prefHeight="142.0" prefWidth="151.0" spacing="20.0">
+                        <JFXComboBox fx:id="cbxProyecto" onAction="#evtCbProyectos" prefHeight="35.0" prefWidth="151.0" promptText="Proyecto" />
+                        <VBox alignment="CENTER" prefHeight="178.0" prefWidth="239.0" spacing="20.0">
                            <children>
                               <JFXTextField fx:id="txtNombreAct" labelFloat="true" prefHeight="35.0" prefWidth="151.0" promptText="Nombre de la actividad" />
                               <JFXTextField fx:id="txtEncargado" labelFloat="true" layoutX="10.0" layoutY="64.0" prefHeight="35.0" prefWidth="151.0" promptText="Encargado" />
@@ -36,7 +35,7 @@
                               <JFXComboBox fx:id="cbxEstado" onAction="#actEstado" prefHeight="25.0" prefWidth="165.0" promptText="Estado" />
                            </children>
                         </VBox>
-                        <VBox alignment="CENTER" spacing="15.0">
+                        <VBox alignment="CENTER" prefHeight="178.0" prefWidth="373.0" spacing="15.0">
                            <children>
                               <JFXTextArea fx:id="txtDetalle" prefHeight="89.0" prefWidth="266.0" promptText="Descripcion" />
                               <HBox prefHeight="61.0" prefWidth="266.0">

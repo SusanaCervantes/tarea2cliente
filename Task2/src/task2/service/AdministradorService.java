@@ -42,6 +42,10 @@ public class AdministradorService {
         List<AdministradorDto> adms = port.getAdmiLogging(usuario, contrasena);
         List<Administradordto> adms2 = new ArrayList<>();
         
+        if(adms == null || adms.size()==0){
+            return null;
+        }
+        
         for(AdministradorDto a: adms){
             adms2.add(new Administradordto(a));
         }

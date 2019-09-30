@@ -35,8 +35,6 @@ public class MenuController extends Controller implements Initializable {
     @FXML
     private void evtBtnProyectos(ActionEvent event) {
         FlowController.getInstance().goView("MantProyectos");
-        MantProyectosController mpc = (MantProyectosController) FlowController.getInstance().getController("MantProyectos");
-        mpc.llenarLideres();
     }
 
     @FXML

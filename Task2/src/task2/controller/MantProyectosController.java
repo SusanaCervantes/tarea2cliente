@@ -10,9 +10,8 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
-import controller.AdministradorDto;
-import controller.ProyectosController_Service;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -28,6 +27,7 @@ import task2.model.Administradordto;
 import task2.model.Proyectodto;
 import task2.service.AdministradorService;
 import task2.service.ProyectoService;
+import task2.util.AppContext;
 import task2.util.FlowController;
 import task2.util.Formato;
 import task2.util.Mensaje;
@@ -51,8 +51,6 @@ public class MantProyectosController extends Controller implements Initializable
     @FXML private JFXButton btn_Eliminar;
     @FXML private JFXButton btn_GuardarP;
     @FXML private JFXButton btn_BuscarP;
-    @FXML private JFXComboBox<Administradordto> cb_Lider;
-    @FXML private JFXButton btn_BuscarLider;
     @FXML private JFXTextField tf_Patrocinador;
     @FXML private JFXTextField tf_LiderTecnico;
     @FXML private JFXRadioButton rb_activo;
@@ -67,7 +65,9 @@ public class MantProyectosController extends Controller implements Initializable
     AdministradorService aservice;
     ObservableList<Administradordto> lista;
     @FXML
-    private JFXButton btn_agregar;
+    private JFXTextField tf_cep;
+    @FXML
+    private JFXTextField tf_celt;
     /**
      * Initializes the controller class.
      */
@@ -94,7 +94,7 @@ public class MantProyectosController extends Controller implements Initializable
         men = new Mensaje();
         pservice = new ProyectoService();
         aservice = new AdministradorService();
-        
+        proyecto = new Proyectodto();
     }
     
     /**
@@ -104,6 +104,8 @@ public class MantProyectosController extends Controller implements Initializable
         tf_LiderTecnico.setTextFormatter(Formato.getInstance().letrasFormat(30));
         tf_Patrocinador.setTextFormatter(Formato.getInstance().letrasFormat(30));
         tf_nombreProyecto.setTextFormatter(Formato.getInstance().maxLengthFormat(30));
+        tf_cep.setTextFormatter(Formato.getInstance().maxLengthFormat(50));
+        tf_celt.setTextFormatter(Formato.getInstance().maxLengthFormat(50));
     }
     
     /**
@@ -111,40 +113,24 @@ public class MantProyectosController extends Controller implements Initializable
      * @return true si lo cumple
      */
     public Boolean validarRequeridos(){
-        proyecto = new Proyectodto();
         if(!tf_nombreProyecto.getText().isEmpty() || !tf_nombreProyecto.getText().equals(" ")){
-            proyecto.setProNombre(tf_nombreProyecto.getText());
-            if(!tf_LiderTecnico.getText().isEmpty()|| !tf_nombreProyecto.getText().equals(" ")){
-                proyecto.setProLtecnico(tf_Patrocinador.getText());
+            if(!tf_LiderTecnico.getText().isEmpty()|| !tf_LiderTecnico.getText().equals(" ")){
                 if(!tf_Patrocinador.getText().isEmpty()|| !tf_Patrocinador.getText().equals(" ")){
-                    proyecto.setProPatrocinador(tf_Patrocinador.getText());
                     if(dp_fechainicio.getValue() != null){
-                        proyecto.setProFpInicio(dp_fechainicio.getValue().toString());
                         if(dp_fechafinal.getValue() != null){
-                            proyecto.setProFpFinal(dp_fechafinal.getValue().toString());
-                            if(cb_Lider.getValue() != null){
-                                proyecto.setAdmId(cb_Lider.getValue());
-                                if(tg_estado.getSelectedToggle() != null){
-                                    proyecto.setProEstado(tg_estado.getSelectedToggle().getUserData().toString());
-                                    if(dp_fechainicio.getValue() != null){
-                                        proyecto.setProFrInicio(dp_fechaRealInicio.getValue().toString());
-                                        if(dp_fechaRealFinal.getValue() != null){
-                                            proyecto.setProFrFinal(dp_fechaRealFinal.getValue().toString());
-                                        }else{
-                                            proyecto.setProFrFinal("N");
-                                        }
-                                    }else{
-                                        proyecto.setProFrInicio("N");
+                            if(tg_estado.getSelectedToggle() != null){
+                                if(!tf_cep.getText().isEmpty()|| !tf_cep.getText().equals(" ")){
+                                    if(!tf_celt.getText().isEmpty()|| !tf_celt.getText().equals(" ")){
+                                        return true;
                                     }
-                                    return true;
                                 }
-                            }
+                            }                           
                         }
                     }
                 }
             }
         }
-        proyecto = null;
+        //proyecto = null;
         men.show(Alert.AlertType.ERROR, "ERROR", "Algunos campos aun estan vacios");
         return false;
     }
@@ -161,19 +147,10 @@ public class MantProyectosController extends Controller implements Initializable
             dp_fechaRealInicio.setValue(null);
             dp_fechafinal.setValue(null);
             dp_fechainicio.setValue(null);
-            cb_Lider.setValue(null);
             tg_estado.getSelectedToggle().setSelected(false);
         }catch(Exception ex){}
     }
     
-    /**
-     * llena la lista de lideres 
-     */
-    public void llenarLideres(){
-       lista.clear();
-       lista = FXCollections.observableArrayList(aservice.getAdministradores("%", "%")); 
-       cb_Lider.setItems(lista);
-    }
     
     
     @FXML
@@ -205,38 +182,74 @@ public class MantProyectosController extends Controller implements Initializable
 
     @FXML
     private void accionGuardarProyecto(ActionEvent event) {
-        if(proyecto != null && validarRequeridos()){
-               pservice.Guardar(proyecto);
+        if(validarRequeridos()){
+            String val = "NR";
+            proyecto.setProPatrocinador(tf_Patrocinador.getText());
+            proyecto.setProNombre(tf_nombreProyecto.getText());
+            proyecto.setProLtecnico(tf_LiderTecnico.getText());
+            proyecto.setProFpInicio(dp_fechainicio.getValue().toString());
+            proyecto.setProFpFinal(dp_fechafinal.getValue().toString());
+            proyecto.setProEstado(tg_estado.getSelectedToggle().getUserData().toString());
+            proyecto.setProCorreoPatrocinador(tf_cep.getText());
+            proyecto.setProCorrepLtecnico(tf_celt.getText());
+            if(dp_fechaRealInicio.getValue() != null){
+                val = dp_fechaRealInicio.getValue().toString();
+            }
+            proyecto.setProFrInicio(val);
+            val = "NR";
+            if(dp_fechaRealFinal.getValue() != null){
+                val = dp_fechaRealFinal.getValue().toString();
+            }
+            proyecto.setProFrFinal(val);
+            //proyecto.setAdmId((Administradordto)AppContext.getInstance().get("Usuario"));
+            proyecto.setProVersion(Long.valueOf(1));
+            if(proyecto != null){
+                men.show(Alert.AlertType.INFORMATION, "INFORMATION", proyecto.toString());
+                Administradordto adm = new Administradordto();
+                adm = (Administradordto) AppContext.getInstance().get("Usuario");
+                proyecto.setAdmId(adm);
+                System.out.println(adm.getId());
+                pservice.Guardar(proyecto);
+            }
         }else{
-            men.showModal(Alert.AlertType.WARNING, "ADVERTENCIA", this.getStage(), "No existe proyecto que guardar");
+            men.show(Alert.AlertType.WARNING, "WARNING", "No existe proyecto que guardar");
         }
     }
 
     @FXML
     private void accionBuscarP(ActionEvent event) {
         BuscarProyectoController bpc = (BuscarProyectoController)FlowController.getInstance().getController("BuscarProyecto");
-        bpc.LlenarLideres();
         FlowController.getInstance().goViewInWindow("BuscarProyecto", Boolean.FALSE, Boolean.FALSE);
         proyecto = bpc.getProyecto();
         bpc.setProyecto();
+        llenarCampos();
         
     }
 
-    @FXML
-    private void accionBuscarLider(ActionEvent event) {
-        BuscarLiderController bpc = (BuscarLiderController)FlowController.getInstance().getController("BuscarLider");
-        FlowController.getInstance().goViewInWindow("BuscarLider", Boolean.FALSE, Boolean.FALSE);
-        cb_Lider.setValue(lista.get(lista.indexOf(bpc.getSeleccionado())));
-        bpc.setSeleccionado();
-    }
-
-    @Override
-    public void initialize() {}
-
-    @FXML
-    private void accionAgregarL(ActionEvent event) {
-        FlowController.getInstance().goViewInWindow("MantAdministradores", Boolean.FALSE, Boolean.FALSE);
-        llenarLideres();
+    void llenarCampos(){
+        if(proyecto != null){
+            tf_nombreProyecto.setText(proyecto.getProNombre());
+            tf_LiderTecnico.setText(proyecto.getProLtecnico());
+            tf_Patrocinador.setText(proyecto.getProPatrocinador());
+            tf_celt.setText(proyecto.getProCorrepLtecnico());
+            tf_cep.setText(proyecto.getProCorreoPatrocinador());
+            dp_fechainicio.setValue(LocalDate.parse(proyecto.getProFpInicio()));
+            dp_fechafinal.setValue(LocalDate.parse(proyecto.getProFpFinal()));
+            if(!proyecto.getProFrInicio().equals("NR")){
+                dp_fechaRealInicio.setValue(LocalDate.parse(proyecto.getProFrInicio()));
+            }
+            if(!proyecto.getProFrFinal().equals("NR")){
+                dp_fechaRealFinal.setValue(LocalDate.parse(proyecto.getProFrFinal()));
+            }
+        }
     }
     
+    public void EstablecerEstado(){
+        
+    }
+    
+    @Override
+    public void initialize() {
+        Limpiar();
+    }
 }

@@ -6,11 +6,12 @@
 package task2.model;
 
 
+import controller.ActividadDto;
+import controller.AdministradorDto;
 import controller.ProyectosDto;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.beans.property.SimpleStringProperty;
-import task2.model.Administradordto;
 
 /**
  *
@@ -29,11 +30,13 @@ public class Proyectodto {
     public Administradordto admId;
     public Long proVersion;
     public SimpleStringProperty proNombre;
+    public SimpleStringProperty proCorreoPatrocinador;
+    public SimpleStringProperty proCorrepLtecnico;
    // public List<Seguimientodto> seguimientosList;
     public List<Actividaddto> actividadList;
     
     public Proyectodto(){
-        proId = new SimpleStringProperty();
+        proId = new SimpleStringProperty("0");
         proPatrocinador  = new SimpleStringProperty();
         proLtecnico = new SimpleStringProperty();
         proFpInicio = new SimpleStringProperty();
@@ -42,13 +45,16 @@ public class Proyectodto {
         proFrFinal = new SimpleStringProperty();
         proEstado = new SimpleStringProperty();
         proNombre = new SimpleStringProperty();
+        proCorrepLtecnico = new SimpleStringProperty();
+        proCorreoPatrocinador = new SimpleStringProperty();
       //  this.seguimientosList = new ArrayList();
         this.actividadList = new ArrayList();
     }
     
     public Proyectodto(ProyectosDto pro){
         this();
-        this.proId.set(pro.getProId().toString());
+        if(pro.getProId() != null)
+            this.proId.set(pro.getProId().toString());
         this.proPatrocinador.set(pro.getProPatrocinador());
         this.proLtecnico.set(pro.getProLtecnico());
         this.proFpInicio.set(pro.getProFpInicio());
@@ -56,9 +62,11 @@ public class Proyectodto {
         this.proFrInicio.set(pro.getProFrInicio());
         this.proFrFinal.set(pro.getProFrFinal());
         this.proEstado.set(pro.getProEstado());
-        //this.admId = new Administradordto(pro.getAdmId());
+        this.admId = new Administradordto(pro.getAdmId());
         this.proNombre.set(pro.getProNombre());
-        //this.actividadList = pro.getActividadList()
+        this.proCorreoPatrocinador.set(pro.getProCorreoPatrocinador());
+        this.proCorrepLtecnico.set(pro.getProCorreoLtecnico());
+        this.actividadList = convertList(pro.getActividadList());
     }
     
     public ProyectosDto DtoTodto(){
@@ -71,8 +79,10 @@ public class Proyectodto {
         proy.setProFrInicio(this.getProFrInicio());
         proy.setProFrFinal(this.getProFrFinal());
         proy.setProEstado(this.getProEstado());
-        //proy.setAdmId(this.getAdmId().AdministradordtoToDto(new AdministradorDto()));
+        proy.setAdmId(this.admId.AdministradordtoToDto(new AdministradorDto()));
         proy.setProNombre(this.getProNombre());
+        proy.setProCorreoLtecnico(this.getProCorrepLtecnico());
+        proy.setProCorreoPatrocinador(this.getProCorreoPatrocinador());
         return proy;
     }
 
@@ -180,8 +190,41 @@ public class Proyectodto {
         this.admId = admId;
     }
 
+    @Override
+    public String toString() {
+        return "ID: " + proId.get() + "\nPatrocinador " + proPatrocinador.get() + "\nLider Tecnico " + proLtecnico.get() + "\nFInicio " + proFpInicio.get() + 
+               "\nFFinal " + proFpFinal.get() + "\nFRFInicio " + proFrInicio.get() + "\nFRFinal " + proFrFinal.get() + "\nEstado " + proEstado.get() + 
+               "\nV: " + proVersion + "\nNombre " + proNombre.get() ;
+    }
+
+    public String getProCorreoPatrocinador() {
+        return proCorreoPatrocinador.get();
+    }
+
+    public void setProCorreoPatrocinador(String proCorreoPatrocinador) {
+        this.proCorreoPatrocinador.set(proCorreoPatrocinador);
+    }
+
+    public String getProCorrepLtecnico() {
+        return proCorrepLtecnico.get();
+    }
+
+    public void setProCorrepLtecnico(String proCorrepLtecnico) {
+        this.proCorrepLtecnico.set(proCorrepLtecnico);
+    }
+
     
-    
+    static List<Actividaddto> convertList(List<ActividadDto> list){
+        if(list == null){
+            return null;
+        }else{
+            List<Actividaddto> lista = new ArrayList();
+            for(ActividadDto act : list){
+                lista.add(new Actividaddto(act));
+            }
+            return lista;
+        }
+    }
     
     
     

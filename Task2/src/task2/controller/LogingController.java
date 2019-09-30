@@ -19,6 +19,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import task2.model.Administradordto;
 import task2.service.AdministradorService;
+import task2.util.AppContext;
 import task2.util.FlowController;
 import task2.util.Mensaje;
 
@@ -77,6 +78,7 @@ public class LogingController extends Controller implements Initializable {
             Administradordto acceder = admS.log(txtUsuario.getText(), txtContrasena.getText());
             if(acceder != null){
                 admiLog = acceder;
+                AppContext.getInstance().set("Usuario", admiLog);
                 getStage().close();
                 FlowController.getInstance().goMain();
                 FlowController.getInstance().goView("Menu");
