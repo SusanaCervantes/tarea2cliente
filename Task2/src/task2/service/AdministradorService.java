@@ -38,7 +38,7 @@ public class AdministradorService {
         return adms2;
     }
      
-    public boolean log(String usuario, String contrasena){
+    public Administradordto log(String usuario, String contrasena){
         List<AdministradorDto> adms = port.getAdmiLogging(usuario, contrasena);
         List<Administradordto> adms2 = new ArrayList<>();
         
@@ -47,9 +47,9 @@ public class AdministradorService {
         }
         
         if(!adms2.get(0).getCedula().isEmpty()){
-            return true;
+            return adms2.get(0);
         }else{
-            return false;
+            return null;
         }
         
         

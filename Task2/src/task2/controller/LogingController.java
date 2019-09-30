@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import task2.model.Administradordto;
 import task2.service.AdministradorService;
 import task2.util.FlowController;
 import task2.util.Mensaje;
@@ -70,19 +71,20 @@ public class LogingController extends Controller implements Initializable {
         if(!ban){
             new Mensaje().show(Alert.AlertType.WARNING, "", "Campos Vacios");
         }else{
-//            boolean acceder = admS.log(txtUsuario.getText(), txtContrasena.getText());
-//            if(acceder){
+            Administradordto acceder = admS.log(txtUsuario.getText(), txtContrasena.getText());
+            if(acceder != null){
+                admiLog = acceder;
                 getStage().close();
                 FlowController.getInstance().goMain();
                 FlowController.getInstance().goView("Menu");
-//            }else{
-//                new Mensaje().show(Alert.AlertType.ERROR, "", "Usuario o contraseña incorrectos");
-//            }
+            }else{
+                new Mensaje().show(Alert.AlertType.ERROR, "", "Usuario o contraseña incorrectos");
+            }
         }
         
         
     }
-    
+    public Administradordto admiLog= new Administradordto();
     public boolean validar(){
         boolean ban=true;
         if(txtUsuario.getText().isEmpty()||txtUsuario.getText().equals("")||txtUsuario.getText().equals("%")){
