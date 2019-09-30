@@ -6,7 +6,7 @@
 package task2.model;
 
 import javafx.beans.property.SimpleStringProperty;
-import task2.service.ActividadDto;
+import controller.ActividadDto;
 
 /**
  *

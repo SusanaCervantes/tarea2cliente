@@ -41,6 +41,7 @@ public class MenuController extends Controller implements Initializable {
 
     @FXML
     private void evtBtnActividad(ActionEvent event) {
+        FlowController.getInstance().goView("ActividadProyectos");
     }
 
     @FXML

@@ -5,9 +5,9 @@
  */
 package task2.service;
 
-//import controller.AdministradorController;
-//import controller.AdministradorController_Service;
-//import controller.AdministradorDto;
+import controller.AdministradorController;
+import controller.AdministradorController_Service;
+import controller.AdministradorDto;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.control.Alert;
@@ -57,13 +57,15 @@ public class AdministradorService {
             adms2.add(new Administradordto(a));
         }
         
-        if(!adms2.get(0).getCedula().isEmpty()){
-            return adms2.get(0);
+        if(adms2.get(0) != null){
+            if(!adms2.get(0).getCedula().isEmpty()){
+                return adms2.get(0);
+            }else{
+                return null;
+            }
         }else{
             return null;
         }
-        
-        
     }
     
     

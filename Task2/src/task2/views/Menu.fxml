@@ -23,7 +23,7 @@
                   </HBox>
                   <HBox prefHeight="172.0" prefWidth="379.0" spacing="60.0">
                      <children>
-                        <JFXButton onAction="#evtBtnActividad" prefHeight="140.0" prefWidth="140.0" text="Actvidad" />
+                        <JFXButton onAction="#evtBtnActividad" prefHeight="140.0" prefWidth="140.0" text="Actividad" />
                         <JFXButton onAction="#evtBtnSeguimiento" prefHeight="140.0" prefWidth="140.0" text="Seguimiento" />
                         <JFXButton onAction="#evtBtnResumen" prefHeight="140.0" prefWidth="140.0" text="Resumen" />
                      </children>

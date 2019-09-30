@@ -1,4 +1,4 @@
-/*
+﻿/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -45,6 +45,8 @@ public class LogingController extends Controller implements Initializable {
     @FXML
     private JFXTextField txtContrasena;
     
+    AdministradorService admS;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         txtUsuario.setTextFormatter(Formato.getInstance().letrasFormat(30));
@@ -63,7 +65,6 @@ public class LogingController extends Controller implements Initializable {
     
     @Override
     public void initialize() {
-    
     }
 
     @FXML

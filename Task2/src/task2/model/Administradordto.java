@@ -7,7 +7,7 @@ package task2.model;
 
 //import controller.AdministradorDto;
 import javafx.beans.property.SimpleStringProperty;
-import task2.service.AdministradorDto;
+import controller.AdministradorDto;
 
 /**
  *
