@@ -44,6 +44,8 @@ public class LogingController extends Controller implements Initializable {
     @FXML
     private JFXTextField txtContrasena;
     
+    AdministradorService admS;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         AsignarImagenes();
@@ -57,13 +59,14 @@ public class LogingController extends Controller implements Initializable {
     }
     
     @Override
-    public void initialize() {}
+    public void initialize() {
+        admS = new AdministradorService();
+    }
 
     @FXML
     private void accionRegistrarse(ActionEvent event) {
     }
 
-    AdministradorService admS;
     
     @FXML
     private void accion_Acceder(ActionEvent event) {

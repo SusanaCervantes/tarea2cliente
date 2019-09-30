@@ -25,9 +25,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
+import javafx.util.StringConverter;
 import task2.model.Actividaddto;
 import task2.model.Proyectodto;
 import task2.service.ActividadService;
+import task2.service.ProyectoService;
 import task2.util.FlowController;
 import task2.util.Formato;
 import task2.util.Mensaje;
@@ -37,7 +39,7 @@ import task2.util.Mensaje;
  *
  * @author Usuario
  */
-public class ActividadProyectosController implements Initializable {
+public class ActividadProyectosController extends Controller implements Initializable {
 
     @FXML
     private JFXButton btnAtras;
@@ -92,8 +94,6 @@ public class ActividadProyectosController implements Initializable {
         proyectos = FXCollections.observableArrayList();
         as = new ActividadService();
         
-        
-        
         ArrayList<String> liscbxE = new ArrayList<String>();
         liscbxE.add("Planificada");
         liscbxE.add("En curso");
@@ -102,6 +102,17 @@ public class ActividadProyectosController implements Initializable {
         ObservableList<String> lis=FXCollections.observableArrayList(liscbxE);
         cbxEstado.setItems(lis);
         
+        cbxProyecto.setConverter(new StringConverter<Proyectodto>() {
+            @Override
+            public String toString(Proyectodto object) {
+                return object.getProNombre();
+            }
+
+            @Override
+            public Proyectodto fromString(String string) {
+                return null;
+            }
+    });
         
     }    
 
@@ -116,7 +127,7 @@ public class ActividadProyectosController implements Initializable {
             proyecto = cbxProyecto.getSelectionModel().getSelectedItem();
             act.setPro(proyecto);
             
-            actividades = (FXCollections.observableArrayList(as.getActividades(new Long(1))));//new Long(proyecto.proId.get()))));
+            actividades = (FXCollections.observableArrayList(as.getActividades(new Long(proyecto.proId.get()))));
             tvActividades.setItems(actividades);
         }
     }
@@ -189,7 +200,6 @@ public class ActividadProyectosController implements Initializable {
 
     @FXML
     private void btnGuardar(ActionEvent event) {
-        
         if(txtDetalle.getText().isEmpty() || dIPlan.getValue() == null || dFPlan.getValue() == null || txtNombreAct.getText().isEmpty() || txtEncargado.getText().isEmpty() || estado.isEmpty()){
             new Mensaje().show(Alert.AlertType.INFORMATION, "Guardar actividad", "Falta informacion");
         }else{
@@ -242,6 +252,16 @@ public class ActividadProyectosController implements Initializable {
             dFReal.setValue(LocalDate.parse(act.getFrfinal().get(), formatter)); 
             
         }
+    }
+
+    @Override
+    public void initialize() {
+        proyectos.clear();
+        ProyectoService ps = new ProyectoService();
+        proyectos = (FXCollections.observableArrayList(ps.getActivos()));
+        cbxProyecto.setItems(proyectos);
+        proyecto = new Proyectodto();
+        act = new Actividaddto();
     }
     
 }

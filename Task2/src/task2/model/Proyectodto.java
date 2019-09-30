@@ -5,11 +5,12 @@
  */
 package task2.model;
 
-import controller.AdministradorDto;
+
 import controller.ProyectosDto;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.beans.property.SimpleStringProperty;
+import task2.model.Administradordto;
 
 /**
  *
@@ -55,7 +56,7 @@ public class Proyectodto {
         this.proFrInicio.set(pro.getProFrInicio());
         this.proFrFinal.set(pro.getProFrFinal());
         this.proEstado.set(pro.getProEstado());
-        this.admId = new Administradordto(pro.getAdmId());
+        //this.admId = new Administradordto(pro.getAdmId());
         this.proNombre.set(pro.getProNombre());
         //this.actividadList = pro.getActividadList()
     }
@@ -70,7 +71,7 @@ public class Proyectodto {
         proy.setProFrInicio(this.getProFrInicio());
         proy.setProFrFinal(this.getProFrFinal());
         proy.setProEstado(this.getProEstado());
-        proy.setAdmId(this.getAdmId().AdministradordtoToDto(new AdministradorDto()));
+        //proy.setAdmId(this.getAdmId().AdministradordtoToDto(new AdministradorDto()));
         proy.setProNombre(this.getProNombre());
         return proy;
     }
