@@ -6,6 +6,7 @@
 package task2.model;
 
 //import controller.SeguimientoDto;
+import controller.SeguimientoDto;
 import javafx.beans.property.SimpleStringProperty;
 import controller.SeguimientoDto;
 
@@ -39,6 +40,7 @@ public class Seguimientodto {
         seg.setFecha(this.getFecha());
         seg.setPorcentaje(this.getPorcentaje());
         seg.setVersion(this.getVersion());
+        seg.setProyecto(this.getProyecto().DtoTodto());
         return seg;
     }
 

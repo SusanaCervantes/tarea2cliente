@@ -1,3 +1,9 @@
+﻿<<<<<<< HEAD
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package task2.controller;
 
 
@@ -18,7 +24,6 @@ import task2.model.Administradordto;
 import task2.service.AdministradorService;
 import task2.util.AppContext;
 import task2.util.FlowController;
-import task2.util.Formato;
 import task2.util.Mensaje;
 
 /**
@@ -63,6 +68,7 @@ public class LogingController extends Controller implements Initializable {
     
     @Override
     public void initialize() {
+        admS = new AdministradorService();
     }
 
     @FXML

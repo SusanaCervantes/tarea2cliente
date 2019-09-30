@@ -32,7 +32,6 @@ import task2.model.Proyectodto;
 import task2.service.ActividadService;
 import task2.service.ProyectoService;
 import task2.util.AppContext;
-import task2.util.Correo;
 import task2.util.FlowController;
 import task2.util.Formato;
 import task2.util.Mensaje;
@@ -76,18 +75,28 @@ public class ActividadProyectosController extends Controller implements Initiali
     ObservableList<Proyectodto> proyectos;
     Proyectodto proyecto;
     Administradordto adm = new Administradordto();
+    Proyectodto proyecto=new Proyectodto();
+    ProyectoService proS = new ProyectoService();
     
     ObservableList<Actividaddto> actividades;
-    Actividaddto act;
-    ActividadService as;
+    Actividaddto act=new Actividaddto();
+    ActividadService as = new ActividadService();
     @FXML
     private JFXTextField txtOrden;
 
     /**
      * Initializes the controller class.
      */
+    
+    
+    Administradordto admi = new Administradordto(); 
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        admi = (Administradordto) AppContext.getInstance().get("Usuario");
+        
+        
         tcNombre.setCellValueFactory(x -> x.getValue().nombre);
         tcEncargado.setCellValueFactory(x-> x.getValue().encargado);
         tcDescripcion.setCellValueFactory(x -> x.getValue().descripcion);
@@ -105,6 +114,9 @@ public class ActividadProyectosController extends Controller implements Initiali
         liscbxE.add("Finalizada");
         ObservableList<String> lis=FXCollections.observableArrayList(liscbxE);
         cbxEstado.setItems(lis);
+        
+//        proyectos=(ObservableList<Proyectodto>) proS.filtrar(admi, "%");
+//        cbxProyecto.setItems(proyectos);
         
         cbxProyecto.setConverter(new StringConverter<Proyectodto>() {
             @Override
@@ -125,16 +137,20 @@ public class ActividadProyectosController extends Controller implements Initiali
          FlowController.getInstance().goView("Menu");
     }
 
-    @FXML
     private void evtCbProyectos(MouseEvent event) {
-        if(cbxProyecto.getSelectionModel().getSelectedItem() != null){
-            proyecto = cbxProyecto.getSelectionModel().getSelectedItem();
+        //if(cbxProyecto.getSelectionModel().getSelectedItem() != null){
+           // proyecto = cbxProyecto.getSelectionModel().getSelectedItem();
+         
+            proyecto=cbxProyecto.getValue();
+            System.out.println(proyecto.getProId());
             act.setPro(proyecto);
             
-            actividades = (FXCollections.observableArrayList(as.getActividades(new Long(proyecto.proId.get()))));
+            actividades = (FXCollections.observableArrayList(as.getActividades(new Long(proyecto.getProId()))));
             tvActividades.setItems(actividades);
         }
-    }
+
+ 
+    
 
    
     private String estado;
@@ -195,6 +211,7 @@ public class ActividadProyectosController extends Controller implements Initiali
         dFPlan.setValue(null);
         dIReal.setValue(null);
         dFReal.setValue(null); 
+        txtOrden.clear();
     }
     
     @FXML
@@ -213,15 +230,22 @@ public class ActividadProyectosController extends Controller implements Initiali
                 act.setEncargado(txtEncargado.getText());
                 act.setEstado(estado);
                 act.setFpfinal(dFPlan.getValue().toString());
+                
                 act.setFpinicio(dIPlan.getValue().toString());
-                act.setFrfinal(dFReal.getValue().toString());
-                act.setFrinicio(dIReal.getValue().toString());
+                
+                if(dFReal.getValue() !=null){
+                act.setFrfinal(dFReal.getValue().toString());}
+                if(dIReal.getValue() !=null){
+                act.setFrinicio(dIReal.getValue().toString());}
                 act.setOrden(Long.parseLong(txtOrden.getText()));
+                System.out.println(proyecto.getProNombre());
                 act.setPro(proyecto);
 
                 act = as.guardarActividad(act);
                 if(act == null){
                     new Mensaje().show(Alert.AlertType.INFORMATION, "Guardar actividad", "Ocurrio un error al guardar la actividad");
+                }else{
+                    new Mensaje().show(Alert.AlertType.INFORMATION, "Guardar actividad", "EXITO");
                 }
             }else{
                 new Mensaje().show(Alert.AlertType.INFORMATION, "Guardar actividad", "Primero debe seleccionar un proyecto");
@@ -262,7 +286,8 @@ public class ActividadProyectosController extends Controller implements Initiali
     public void initialize() {
         proyectos.clear();
         ProyectoService ps = new ProyectoService();
-        proyectos = (FXCollections.observableArrayList(ps.getActivos()));
+        proyectos = (FXCollections.observableArrayList(ps.filtrar(admi, "%")));
+//        proyectos.addAll(ps.getTodos().stream().filter(x->x.getAdmId().getCedula().equalsIgnoreCase(admi.getCedula())).collect(Collectors.toList()));
         cbxProyecto.setItems(proyectos);
         proyecto = new Proyectodto();
         act = new Actividaddto();
@@ -284,5 +309,14 @@ public class ActividadProyectosController extends Controller implements Initiali
         " Estado: " + act.estado
         );
     }
-    
+
+    @FXML
+    private void evtCbProyectos(ActionEvent event) {
+            proyecto=cbxProyecto.getValue();
+            System.out.println(proyecto.getProId());
+            act.setPro(proyecto);
+            
+            actividades = (FXCollections.observableArrayList(as.getActividades(new Long(proyecto.getProId()))));
+            tvActividades.setItems(actividades);
+    }
 }
